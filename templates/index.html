@@ -1,543 +1,313 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuTerapia - Bienestar Mental Online</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-{% block title %}Tu Terapia AI - Bienestar Emocional con IA Especializada{% endblock %}
-{% block description %}Acompañamiento emocional 24/7 con IA especializada. 10 enfoques terapéuticos, completamente privado, gratuito. Comienza tu viaje de bienestar hoy.{% endblock %}
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
-{% endblock %}
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
 
-{% block content %}
-<!-- Hero Section Optimizada -->
-<section class="hero-section">
-  <div class="hero-container animate-fade-in">
-    <!-- Trust Indicators -->
-    <div class="trust-indicators">
-      <div class="trust-badge">
-        <span>🔒</span>
-        <span>100% Privado</span>
-      </div>
-      <div class="trust-badge">
-        <span>🆓</span>
-        <span>Totalmente Gratuito</span>
-      </div>
-      <div class="trust-badge">
-        <span>🚀</span>
-        <span>Sin Registro</span>
-      </div>
-    </div>
-    
-    <h1 class="hero-title">
-      Tu Espacio Personal de <br>
-      <span class="gradient-text">Bienestar Emocional</span>
-    </h1>
-    
-    <p class="hero-subtitle">
-      Acompañamiento terapéutico inteligente disponible 24/7. 
-      <strong>10 enfoques especializados</strong> adaptados a tu estado emocional actual.
-    </p>
-    
-    <!-- CTA Principal -->
-    <div class="cta-section">
-      <a href="/chat" class="cta-primary" id="main-cta">
-        <span class="cta-icon">💬</span>
-        <span>Comenzar Conversación</span>
-        <span class="cta-arrow">→</span>
-      </a>
-      
-      <div class="cta-subtitle">
-        ✨ No necesitas cuenta • Privacidad total • Comienza en 10 segundos
-      </div>
-    </div>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    <!-- Social Proof Rápido -->
-    <div class="social-proof">
-      <div class="proof-stats">
-        <div class="stat">
-          <span class="stat-number">2,547</span>
-          <span class="stat-label">Conversaciones esta semana</span>
-        </div>
-        <div class="stat">
-          <span class="stat-number">4.9★</span>
-          <span class="stat-label">Satisfacción promedio</span>
-        </div>
-        <div class="stat">
-          <span class="stat-number">24/7</span>
-          <span class="stat-label">Siempre disponible</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+        .logo {
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-<!-- SECCIÓN PRINCIPAL: Herramientas de Bienestar -->
-<section class="tools-section">
-  <div class="section-header">
-    <h2 class="section-title">🛠️ Herramientas de Bienestar</h2>
-    <p class="section-subtitle">Acceso rápido a todas tus herramientas de crecimiento personal</p>
-  </div>
-  
-  <div class="tools-grid-compact">
-    <a href="/dashboard" class="tool-card-compact">
-      <span class="tool-emoji-compact">📊</span>
-      <div class="tool-content">
-        <h3 class="tool-title-compact">Mi Progreso</h3>
-        <p class="tool-description-compact">Dashboard completo de tu evolución</p>
-      </div>
-    </a>
+        .tagline {
+            font-size: 1.4rem;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
 
-    <a href="/chat" class="tool-card-compact featured">
-      <span class="tool-emoji-compact">💬</span>
-      <div class="tool-content">
-        <h3 class="tool-title-compact">Chat Terapéutico</h3>
-        <p class="tool-description-compact">Conversación con IA especializada</p>
-      </div>
-      <div class="tool-badge">Popular</div>
-    </a>
+        .status {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 30px 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+            animation: pulse 2s infinite;
+        }
 
-    <a href="/ejercicios" class="tool-card-compact">
-      <span class="tool-emoji-compact">🧘</span>
-      <div class="tool-content">
-        <h3 class="tool-title-compact">Ejercicios</h3>
-        <p class="tool-description-compact">Respiración y técnicas de calma</p>
-      </div>
-    </a>
-  </div>
-</section>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
 
-<!-- SECCIÓN: Enfoques Terapéuticos -->
-<section class="therapy-section">
-  <div class="section-header">
-    <h2 class="section-title">🌱 Enfoques Terapéuticos Especializados</h2>
-    <p class="section-subtitle">Elige el enfoque que mejor resuene contigo para tu chat personalizado</p>
-  </div>
-  
-  <!-- Enfoques Principales (Más Visibles) -->
-  <div class="featured-approaches">
-    <h3 class="featured-title">🌟 Más Populares</h3>
-    <div class="approaches-grid featured">
-      <a href="/chat?terapia=humanista" class="approach-card featured" data-approach="humanista">
-        <div class="approach-icon">🌱</div>
-        <h4 class="approach-name">Humanista</h4>
-        <p class="approach-description">Crecimiento personal, autoaceptación y potencial humano</p>
-        <div class="approach-benefits">
-          <span>• Autoexploración profunda</span>
-          <span>• Espacio sin juicio</span>
-          <span>• Empoderamiento personal</span>
-        </div>
-        <div class="approach-cta">
-          <span>Comenzar Chat Humanista →</span>
-        </div>
-      </a>
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
 
-      <a href="/chat?terapia=cognitivo" class="approach-card featured" data-approach="cognitivo">
-        <div class="approach-icon">🧩</div>
-        <h4 class="approach-name">Cognitivo-Conductual</h4>
-        <p class="approach-description">Transformar patrones de pensamiento y comportamiento</p>
-        <div class="approach-benefits">
-          <span>• Técnicas prácticas</span>
-          <span>• Cambio de perspectiva</span>
-          <span>• Herramientas concretas</span>
-        </div>
-        <div class="approach-cta">
-          <span>Comenzar Chat Cognitivo →</span>
-        </div>
-      </a>
+        .feature {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
 
-      <a href="/chat?terapia=mindfulness" class="approach-card featured" data-approach="mindfulness">
-        <div class="approach-icon">🧘</div>
-        <h4 class="approach-name">Mindfulness</h4>
-        <p class="approach-description">Atención plena y presencia consciente</p>
-        <div class="approach-benefits">
-          <span>• Reducción de ansiedad</span>
-          <span>• Calma mental</span>
-          <span>• Conciencia presente</span>
-        </div>
-        <div class="approach-cta">
-          <span>Comenzar Chat Mindfulness →</span>
-        </div>
-      </a>
-    </div>
-  </div>
+        .feature:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 1);
+            border: 2px solid #667eea;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
 
-  <!-- Todos los Enfoques -->
-  <div class="all-approaches">
-    <h3 class="approaches-subtitle">🎯 Todos los Enfoques Especializados</h3>
-    <div class="therapy-grid">
-      <a href="/chat?terapia=gestalt" class="therapy-card animate-fade-in animate-delay-1">
-        <span class="therapy-emoji">🌀</span>
-        <h2 class="therapy-title">Gestalt</h2>
-        <p class="therapy-description">Conciencia del presente y conexión mente-cuerpo.</p>
-      </a>
+        .feature i {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
 
-      <a href="/chat?terapia=transpersonal" class="therapy-card animate-fade-in animate-delay-2">
-        <span class="therapy-emoji">✨</span>
-        <h2 class="therapy-title">Transpersonal</h2>
-        <p class="therapy-description">Exploración de la conciencia expandida.</p>
-      </a>
+        .feature h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
 
-      <a href="/chat?terapia=dbt" class="therapy-card animate-fade-in animate-delay-3">
-        <span class="therapy-emoji">🔁</span>
-        <h2 class="therapy-title">Dialéctico-Conductual</h2>
-        <p class="therapy-description">Regulación emocional y habilidades interpersonales.</p>
-      </a>
+        .feature p {
+            color: #666;
+            line-height: 1.6;
+        }
 
-      <a href="/chat?terapia=act" class="therapy-card animate-fade-in animate-delay-4">
-        <span class="therapy-emoji">🎯</span>
-        <h2 class="therapy-title">Aceptación y Compromiso</h2>
-        <p class="therapy-description">Vivir según tus valores más profundos.</p>
-      </a>
+        .contact-info {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+        }
 
-      <a href="/chat?terapia=sistemico" class="therapy-card animate-fade-in animate-delay-5">
-        <span class="therapy-emoji">🔄</span>
-        <h2 class="therapy-title">Sistémica</h2>
-        <p class="therapy-description">Comprensión de relaciones y dinámicas familiares.</p>
-      </a>
+        .contact-info h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
 
-      <a href="/chat?terapia=freud" class="therapy-card animate-fade-in animate-delay-1">
-        <span class="therapy-emoji">🧠</span>
-        <h2 class="therapy-title">Psicoanalítica</h2>
-        <p class="therapy-description">Exploración del inconsciente y conflictos internos.</p>
-      </a>
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
 
-      <a href="/chat?terapia=jung" class="therapy-card animate-fade-in animate-delay-2">
-        <span class="therapy-emoji">🌌</span>
-        <h2 class="therapy-title">Jungiana</h2>
-        <p class="therapy-description">Arquetipos, símbolos y trabajo con sueños.</p>
-      </a>
-    </div>
-  </div>
-</section>
+        .contact-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid #667eea;
+        }
 
-<!-- Therapy Approaches Preview -->
-<section class="therapy-preview-section">
-  <div class="section-header">
-    <h2 class="section-title">🌸 Enfoques Terapéuticos en Acción</h2>
-    <p class="section-subtitle">Cada uno diseñado para diferentes necesidades emocionales</p>
-  </div>
+        .contact-links a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
 
-  <div class="therapy-tabs">
-    <button class="therapy-tab active" onclick="showTherapyPreview('humanista')">
-      <span>🌱</span> Humanista
-    </button>
-    <button class="therapy-tab" onclick="showTherapyPreview('cognitivo')">
-      <span>🧩</span> Cognitivo-Conductual
-    </button>
-    <button class="therapy-tab" onclick="showTherapyPreview('mindfulness')">
-      <span>🧘</span> Mindfulness
-    </button>
-    <button class="therapy-tab" onclick="showTherapyPreview('transpersonal')">
-      <span>✨</span> Transpersonal
-    </button>
-  </div>
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 30px;
+        }
 
-  <div class="therapy-preview-content">
-    <div id="humanista" class="therapy-preview active">
-      <div class="preview-chat">
-        <div class="chat-message user">
-          "Me siento perdido en mi trabajo, como si no fuera suficiente..."
-        </div>
-        <div class="chat-message bot">
-          "Entiendo esa sensación de no sentirte suficiente. Es válido y humano experimentar esto. ¿Podrías contarme más sobre qué específicamente te hace sentir perdido? Tu experiencia es importante y merece ser escuchada sin juicio."
-        </div>
-      </div>
-      <div class="preview-description">
-        <h4>Enfoque Humanista</h4>
-        <p>Centrado en tu crecimiento personal, autoaceptación y potencial humano. Crea un espacio seguro para la autoexploración.</p>
-      </div>
-    </div>
+        .shape {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
 
-    <div id="cognitivo" class="therapy-preview">
-      <div class="preview-chat">
-        <div class="chat-message user">
-          "Siempre pienso que todo va a salir mal, no puedo evitarlo..."
-        </div>
-        <div class="chat-message bot">
-          "Noto que tienes pensamientos automáticos negativos. Esto es común y trabajable. ¿Podemos examinar juntos evidencias reales que apoyen o contradigan estos pensamientos? Te ayudo a identificar patrones y desarrollar perspectivas más equilibradas."
-        </div>
-      </div>
-      <div class="preview-description">
-        <h4>Enfoque Cognitivo-Conductual</h4>
-        <p>Identifica y transforma patrones de pensamiento negativos. Herramientas prácticas para cambiar la relación con tus pensamientos.</p>
-      </div>
-    </div>
+        .shape1 {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
 
-    <div id="mindfulness" class="therapy-preview">
-      <div class="preview-chat">
-        <div class="chat-message user">
-          "Mi mente no para, siempre está acelerada..."
-        </div>
-        <div class="chat-message bot">
-          "Esa sensación de mente acelerada es muy real. Te invito a hacer una pausa conmigo ahora mismo. Nota tu respiración, siente tus pies en el suelo. En este momento, aquí y ahora, estás seguro. ¿Qué observas cuando traes tu atención al presente?"
-        </div>
-      </div>
-      <div class="preview-description">
-        <h4>Enfoque Mindfulness</h4>
-        <p>Cultiva la atención plena y la presencia consciente. Aprende a observar pensamientos y emociones sin ser arrastrado por ellos.</p>
-      </div>
-    </div>
+        .shape2 {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
 
-    <div id="transpersonal" class="therapy-preview">
-      <div class="preview-chat">
-        <div class="chat-message user">
-          "Siento que hay algo más grande que yo, pero no sé qué es..."
-        </div>
-        <div class="chat-message bot">
-          "Esa intuición de algo más grande es profundamente sabia. El alma busca conexión y trascendencia. ¿Qué te susurra esa parte más profunda de ti? Exploremos juntos las dimensiones espirituales de tu experiencia humana."
-        </div>
-      </div>
-      <div class="preview-description">
-        <h4>Enfoque Transpersonal</h4>
-        <p>Explora dimensiones espirituales y de conciencia expandida. Conecta con propósito, significado y trascendencia personal.</p>
-      </div>
-    </div>
-  </div>
+        .shape3 {
+            width: 60px;
+            height: 60px;
+            top: 40%;
+            left: 80%;
+            animation-delay: 4s;
+        }
 
-  <div class="cta-secondary">
-    <a href="/chat" class="btn-secondary">
-      <span>🚀 Probar Todos los Enfoques</span>
-    </a>
-  </div>
-</section>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
 
-<!-- Features Section -->
-<section class="features-section">
-  <div class="section-header">
-    <h2 class="section-title">✨ ¿Por qué elegir Tu Terapia AI?</h2>
-    <p class="section-subtitle">La primera plataforma que combina privacidad total con especialización terapéutica</p>
-  </div>
-
-  <div class="features-grid">
-    <div class="feature-card highlight">
-      <div class="feature-icon">🧠</div>
-      <h3 class="feature-title">10 Enfoques Terapéuticos</h3>
-      <p class="feature-description">
-        Desde Humanista hasta Transpersonal. Encuentra el enfoque que mejor resuene con tu momento actual.
-      </p>
-      <div class="feature-badge">Único en el mercado</div>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">🔒</div>
-      <h3 class="feature-title">Privacidad Absoluta</h3>
-      <p class="feature-description">
-        Tus conversaciones jamás salen de tu navegador. Sin servidores, sin cuentas, sin rastros.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">🎯</div>
-      <h3 class="feature-title">IA Especializada</h3>
-      <p class="feature-description">
-        GPT-4o entrenado específicamente en cada modalidad terapéutica con prompts de expertos.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">📱</div>
-      <h3 class="feature-title">Disponible 24/7</h3>
-      <p class="feature-description">
-        Tu espacio de bienestar siempre accesible. Sin citas, sin esperas, sin horarios.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">🌱</div>
-      <h3 class="feature-title">Herramientas Integradas</h3>
-      <p class="feature-description">
-        Ejercicios de respiración, diario emocional, dashboard de progreso y más.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">🇦🇷</div>
-      <h3 class="feature-title">Contexto Cultural</h3>
-      <p class="feature-description">
-        Desarrollado en Argentina con comprensión de nuestro contexto cultural y social.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- Final CTA -->
-<section class="final-cta-section">
-  <div class="final-cta-container">
-    <div class="cta-content">
-      <h2 class="cta-title">🌟 Tu viaje de bienestar comienza ahora</h2>
-      <p class="cta-description">
-        Únete a miles de personas que ya están transformando su relación con las emociones.
-        <strong>Sin registro, sin compromiso, sin riesgo.</strong>
-      </p>
-      
-      <div class="cta-buttons">
-        <a href="/chat" class="cta-primary large">
-          <span>💬 Comenzar Conversación</span>
-          <span class="cta-arrow">→</span>
-        </a>
-        
-        <a href="/ejercicios" class="cta-secondary">
-          <span>🧘 Probar Ejercicios</span>
-        </a>
-      </div>
-
-      <div class="final-guarantees">
-        <div class="guarantee">
-          <span>✅</span>
-          <span>Acceso inmediato</span>
-        </div>
-        <div class="guarantee">
-          <span>🔒</span>
-          <span>Privacidad garantizada</span>
-        </div>
-        <div class="guarantee">
-          <span>💙</span>
-          <span>Siempre gratuito</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Footer mejorado -->
-<footer class="site-footer">
-  <div class="footer-content">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <h3>🌸 Tu Terapia AI</h3>
-        <p>Acompañamiento emocional inteligente para tu bienestar.</p>
-      </div>
-      
-      <div class="footer-links">
-        <div class="link-group">
-          <h4>Herramientas</h4>
-          <a href="/chat">Chat Terapéutico</a>
-          <a href="/ejercicios">Ejercicios</a>
-          <a href="/dashboard">Mi Progreso</a>
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="floating-shapes">
+            <div class="shape shape1"></div>
+            <div class="shape shape2"></div>
+            <div class="shape shape3"></div>
         </div>
         
-        <div class="link-group">
-          <h4>Información</h4>
-          <a href="/terminos">Términos de Uso</a>
-          <a href="/privacidad">Privacidad</a>
-          <a href="mailto:contacto@tuterapia-ai.com">Contacto</a>
-        </div>
-      </div>
-    </div>
-    
-    <div class="footer-bottom">
-      <p class="disclaimer">
-        💙 <strong>Importante:</strong> Esta aplicación complementa, no reemplaza, la atención profesional de salud mental. 
-        En situaciones de crisis, contacta servicios de emergencia o profesionales cualificados.
-      </p>
-      
-      <div class="creator-info">
-        <p>
-          Creado con dedicación por 
-          <a href="https://www.instagram.com/marianobiotico/" target="_blank">Mariano Biotico</a>
+        <h1 class="logo">
+            <i class="fas fa-heart"></i> TuTerapia
+        </h1>
+        
+        <p class="tagline">
+            Tu espacio seguro para el bienestar mental y emocional
         </p>
-      </div>
+        
+        <div class="status">
+            <i class="fas fa-rocket"></i> ¡Estamos construyendo algo increíble!
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-user-friends"></i>
+                <h3>Terapia Profesional</h3>
+                <p>Conectamos con psicólogos certificados para brindarte la mejor atención personalizada</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-video"></i>
+                <h3>Sesiones Online</h3>
+                <p>Accede a terapia desde la comodidad de tu hogar con nuestra plataforma segura</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Privacidad Total</h3>
+                <p>Tu información está protegida con los más altos estándares de seguridad y confidencialidad</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-clock"></i>
+                <h3>Horarios Flexibles</h3>
+                <p>Programa tus sesiones en el horario que mejor se adapte a tu rutina diaria</p>
+            </div>
+        </div>
+        
+        <div class="contact-info">
+            <h3>¿Tienes preguntas? ¡Contáctanos!</h3>
+            <div class="contact-links">
+                <a href="mailto:contacto@tuterapia.app">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+                <a href="#" onclick="alert('¡Próximamente disponible!')">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="#" onclick="alert('¡Síguenos en redes sociales!')">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
-</footer>
-{% endblock %}
 
-{% block extra_js %}
-<script>
-// Therapy preview functionality
-function showTherapyPreview(therapy) {
-  // Update tabs
-  document.querySelectorAll('.therapy-tab').forEach(tab => tab.classList.remove('active'));
-  document.querySelector(`button[onclick*="${therapy}"]`).classList.add('active');
-  
-  // Update content
-  document.querySelectorAll('.therapy-preview').forEach(preview => preview.classList.remove('active'));
-  document.getElementById(therapy).classList.add('active');
-}
+    <script>
+        // Animación suave al cargar
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '1';
+        });
 
-// Enhanced tracking
-function trackCTAClick(ctaType, location) {
-  if (window.gtag) {
-    gtag('event', 'cta_click', {
-      cta_type: ctaType,
-      location: location
-    });
-  }
-  
-  if (window.uxEnhancements) {
-    window.uxEnhancements.trackEvent('landing_cta_click', {
-      type: ctaType,
-      location: location
-    });
-  }
-}
-
-// Intersection Observer for animations
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-}, observerOptions);
-
-// Initialize animations on load
-document.addEventListener('DOMContentLoaded', function() {
-  // Animate elements on scroll
-  const animatedElements = document.querySelectorAll('.feature-card, .therapy-card, .approach-card');
-  
-  animatedElements.forEach((el, index) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'all 0.6s ease-out';
-    el.style.transitionDelay = `${index * 0.1}s`;
-    observer.observe(el);
-  });
-  
-  // Track main CTA clicks
-  document.getElementById('main-cta').addEventListener('click', () => {
-    trackCTAClick('primary', 'hero');
-  });
-  
-  // Auto-cycle therapy previews
-  let currentTherapy = 0;
-  const therapies = ['humanista', 'cognitivo', 'mindfulness', 'transpersonal'];
-  
-  setInterval(() => {
-    currentTherapy = (currentTherapy + 1) % therapies.length;
-    showTherapyPreview(therapies[currentTherapy]);
-  }, 8000); // Change every 8 seconds
-  
-  // Mark app as used
-  localStorage.setItem('hasUsedApp', 'true');
-  
-  // Show welcome notification for first-time visitors
-  if (!localStorage.getItem('hasVisited')) {
-    setTimeout(() => {
-      if (window.notificationSystem) {
-        window.notificationSystem.showToast(
-          '👋 ¡Bienvenido! Explora nuestros 10 enfoques terapéuticos únicos', 
-          'info', 
-          7000
-        );
-      }
-    }, 3000);
-  }
-});
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
-    });
-  });
-});
-</script>
-{% endblock %}
+        // Efecto de parallax suave
+        document.addEventListener('mousemove', function(e) {
+            const shapes = document.querySelectorAll('.shape');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.5;
+                const translateX = (x - 0.5) * speed * 20;
+                const translateY = (y - 0.5) * speed * 20;
+                shape.style.transform = `translate(${translateX}px, ${translateY}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
