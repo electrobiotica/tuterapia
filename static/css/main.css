@@ -1,0 +1,434 @@
+/* Tu Terapia AI - Estilos Globales */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #4f46e5;
+  --primary-soft: #6366f1;
+  --primary-muted: #e0e7ff;
+  --surface: rgba(255, 255, 255, 0.85);
+  --surface-elevated: rgba(255, 255, 255, 0.95);
+  --surface-dark: rgba(15, 23, 42, 0.9);
+  --surface-elevated-dark: rgba(30, 41, 59, 0.95);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --border-soft: rgba(148, 163, 184, 0.2);
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-elevated: 0 8px 25px rgba(0, 0, 0, 0.1);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
+/* Reset y Base */
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 40%, #f1f5f9 100%);
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Dark Mode */
+.dark-mode {
+  --surface: var(--surface-dark);
+  --surface-elevated: var(--surface-elevated-dark);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-soft: rgba(148, 163, 184, 0.1);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #334155 100%);
+}
+
+/* ====== ESTILOS ESPECÍFICOS DE INDEX ====== */
+
+.hero-container {
+  background: var(--surface-elevated);
+  backdrop-filter: blur(24px) saturate(180%);
+  border-radius: 32px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-elevated);
+  padding: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--primary-muted);
+  color: var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.therapy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.therapy-card {
+  background: var(--surface);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 24px;
+  border: 1px solid var(--border-soft);
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.therapy-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--primary-soft), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.therapy-card:hover::before {
+  transform: translateX(100%);
+}
+
+.therapy-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+  border-color: var(--primary-muted);
+  background: var(--surface-elevated);
+}
+
+.therapy-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.therapy-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.therapy-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Herramientas de Bienestar */
+.tools-section, .therapy-section {
+  margin: 4rem auto;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+  font-size: 1.125rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main-section {
+  max-width: 1200px;
+  margin: 2rem auto 4rem;
+  padding: 0 2rem;
+}
+
+.tools-grid-compact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.tool-card-compact {
+  background: var(--surface-elevated);
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tool-card-compact:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-elevated);
+  border-color: var(--primary-muted);
+}
+
+.tool-card-compact.featured {
+  border: 2px solid var(--primary);
+}
+
+.tool-card-compact.featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-soft));
+}
+
+.tool-emoji-compact {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.tool-content {
+  flex: 1;
+}
+
+.tool-title-compact {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.tool-description-compact {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.tool-badge {
+  background: var(--primary);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* Footer */
+.footer-container {
+  background: var(--surface);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+  padding: 1.5rem;
+  margin: 2rem auto 1rem;
+  max-width: 700px;
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.creator-section {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+}
+
+.creator-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.support-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.support-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.support-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.support-btn {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.support-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.support-btn img {
+  height: 32px;
+  width: auto;
+}
+
+.footer-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-link:hover {
+  color: var(--primary-soft);
+}
+
+/* Floating Help */
+.floating-help {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  box-shadow: var(--shadow-elevated);
+  backdrop-filter: blur(20px);
+  font-size: 1.5rem;
+}
+
+.floating-help:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  background: var(--primary);
+  color: white;
+}
+
+/* ====== COMPONENTES GLOBALES ====== */
+
+/* Superficies Glassmorphism */
+.surface {
+  background: var(--surface);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+.surface-elevated {
+  background: var(--surface-elevated);
+  backdrop-filter: blur(24px) saturate(180%);
+  border-radius: 24px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-elevated);
+}
+
+/* Botones Globales */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.btn:hover {
+  background: var(--surface-elevated);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-soft);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+/* Navegación */
+.navigation

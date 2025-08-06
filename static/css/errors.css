@@ -1,0 +1,176 @@
+/* Tu Terapia AI - Páginas de Error */
+/* Estilos compartidos para 404 y 500 */
+
+:root {
+  --primary: #4f46e5;
+  --primary-soft: #6366f1;
+  --surface-elevated: rgba(255, 255, 255, 0.95);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --border-soft: rgba(148, 163, 184, 0.2);
+  --shadow-elevated: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 40%, #f1f5f9 100%);
+  color: var(--text-primary);
+  line-height: 1.7;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-card {
+  background: var(--surface-elevated);
+  backdrop-filter: blur(24px) saturate(180%);
+  border-radius: 32px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-elevated);
+  padding: 3rem;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.main-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-soft), #3b82f6);
+}
+
+.header-section {
+  margin-bottom: 2rem;
+}
+
+.header-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.main-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.back-button:hover {
+  background: var(--surface-elevated);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-elevated);
+  color: var(--primary);
+}
+
+.footer-note {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-soft);
+  line-height: 1.6;
+}
+
+.footer-note a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-note a:hover {
+  color: var(--primary-soft);
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from { 
+    transform: translateX(100%); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+  
+  .main-card {
+    padding: 2rem;
+    border-radius: 24px;
+  }
+  
+  .main-title {
+    font-size: 2rem;
+  }
+  
+  .header-icon {
+    font-size: 3rem;
+  }
+}

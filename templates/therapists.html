@@ -1,0 +1,816 @@
+{% extends "base.html" %}
+
+{% block title %}Red de Terapeutas Profesionales - Tu Terapia AI{% endblock %}
+{% block description %}Conecta con terapeutas verificados especializados en diferentes enfoques. Encuentra el profesional ideal para tu proceso de crecimiento personal.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/therapists.css') }}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="therapists-hero">
+  <div class="hero-content">
+    <h1 class="hero-title">
+      🤝 Red de Terapeutas <br>
+      <span class="gradient-text">Profesionales Verificados</span>
+    </h1>
+    <p class="hero-subtitle">
+      Conecta con especialistas en diferentes enfoques terapéuticos. 
+      Todos verificados, con experiencia comprobada y comprometidos con tu bienestar.
+    </p>
+    
+    <!-- Quick Stats -->
+    <div class="quick-stats">
+      <div class="stat">
+        <span class="stat-number">{{ stats.total_therapists }}+</span>
+        <span class="stat-label">Terapeutas Verificados</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">{{ stats.cities_covered }}</span>
+        <span class="stat-label">Ciudades Cubiertas</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">10</span>
+        <span class="stat-label">Especialidades</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Search & Filters -->
+<section class="search-section">
+  <div class="search-container">
+    <div class="search-header">
+      <h2>🔍 Encuentra tu Terapeuta Ideal</h2>
+      <p>Filtra por especialidad, ubicación y preferencias</p>
+    </div>
+    
+    <div class="search-form">
+      <div class="search-row">
+        <div class="search-field">
+          <label>🎯 Especialidad</label>
+          <select id="specialty-filter" onchange="applyFilters()">
+            <option value="">Todas las especialidades</option>
+            <option value="humanista">🌱 Humanista</option>
+            <option value="cognitivo">🧩 Cognitivo-Conductual</option>
+            <option value="gestalt">🌀 Gestalt</option>
+            <option value="mindfulness">🧘 Mindfulness</option>
+            <option value="transpersonal">✨ Transpersonal</option>
+            <option value="sistemico">🔄 Sistémica</option>
+            <option value="freud">🧠 Psicoanalítica</option>
+            <option value="jung">🌌 Jungiana</option>
+            <option value="dbt">🔁 Dialéctico-Conductual</option>
+            <option value="act">🎯 Aceptación y Compromiso</option>
+          </select>
+        </div>
+        
+        <div class="search-field">
+          <label>📍 Ciudad</label>
+          <select id="city-filter" onchange="applyFilters()">
+            <option value="">Todas las ciudades</option>
+            <option value="Buenos Aires">Buenos Aires</option>
+            <option value="Córdoba">Córdoba</option>
+            <option value="Rosario">Rosario</option>
+            <option value="Mendoza">Mendoza</option>
+            <option value="La Plata">La Plata</option>
+          </select>
+        </div>
+        
+        <div class="search-field">
+          <label>💰 Precio máximo</label>
+          <select id="price-filter" onchange="applyFilters()">
+            <option value="">Sin límite</option>
+            <option value="5000">Hasta $5.000</option>
+            <option value="8000">Hasta $8.000</option>
+            <option value="12000">Hasta $12.000</option>
+            <option value="15000">Hasta $15.000</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="search-options">
+        <label class="checkbox-option">
+          <input type="checkbox" id="online-only" onchange="applyFilters()">
+          <span class="checkmark"></span>
+          💻 Solo sesiones online
+        </label>
+        
+        <label class="checkbox-option">
+          <input type="checkbox" id="available-only" onchange="applyFilters()" checked>
+          <span class="checkmark"></span>
+          ✅ Solo disponibles ahora
+        </label>
+        
+        <label class="checkbox-option">
+          <input type="checkbox" id="accepts-insurance" onchange="applyFilters()">
+          <span class="checkmark"></span>
+          🏥 Acepta obra social
+        </label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- View Toggle -->
+<section class="view-controls">
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="switchView('list')" id="list-view-btn">
+      📋 Lista
+    </button>
+    <button class="view-btn" onclick="switchView('map')" id="map-view-btn">
+      🗺️ Mapa
+    </button>
+    <button class="view-btn" onclick="switchView('grid')" id="grid-view-btn">
+      🔲 Grilla
+    </button>
+  </div>
+  
+  <div class="results-info">
+    <span id="results-count">Cargando...</span>
+  </div>
+</section>
+
+<!-- Results Area -->
+<section class="results-section">
+  
+  <!-- List View -->
+  <div id="list-view" class="view-container active">
+    <div id="therapists-list" class="therapists-list">
+      <!-- Se llena dinámicamente -->
+    </div>
+  </div>
+  
+  <!-- Map View -->
+  <div id="map-view" class="view-container">
+    <div id="therapists-map" class="therapists-map"></div>
+    <div class="map-sidebar">
+      <div id="map-therapist-list" class="map-therapist-list">
+        <!-- Lista simplificada para el mapa -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Grid View -->
+  <div id="grid-view" class="view-container">
+    <div id="therapists-grid" class="therapists-grid">
+      <!-- Se llena dinámicamente -->
+    </div>
+  </div>
+  
+  <!-- Loading State -->
+  <div id="loading-state" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Buscando terapeutas...</p>
+  </div>
+  
+  <!-- Empty State -->
+  <div id="empty-state" class="empty-state hidden">
+    <div class="empty-icon">🔍</div>
+    <h3>No encontramos terapeutas con estos filtros</h3>
+    <p>Prueba ajustando los criterios de búsqueda o <a href="#" onclick="clearFilters()">borrar todos los filtros</a></p>
+  </div>
+
+</section>
+
+<!-- CTA para Terapeutas -->
+<section class="therapist-cta">
+  <div class="cta-content">
+    <div class="cta-text">
+      <h3>¿Eres Terapeuta?</h3>
+      <p>Únete a nuestra red de profesionales verificados y conecta con personas que buscan apoyo emocional.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="/terapeutas/unirse" class="btn-primary">
+        ✨ Unirme a la Red
+      </a>
+      <a href="mailto:terapeutas@tuterapia-ai.com" class="btn-secondary">
+        📧 Más Información
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Modal -->
+<div id="contact-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>💬 Contactar Terapeuta</h3>
+      <button onclick="closeContactModal()" class="close-btn">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div id="therapist-info" class="therapist-summary">
+        <!-- Info del terapeuta seleccionado -->
+      </div>
+      
+      <form id="contact-form" onsubmit="sendContactMessage(event)">
+        <div class="form-group">
+          <label>Tu nombre</label>
+          <input type="text" id="contact-name" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Tu email</label>
+          <input type="email" id="contact-email" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Mensaje inicial</label>
+          <textarea id="contact-message" rows="4" placeholder="Cuéntale brevemente sobre lo que te gustaría trabajar en terapia..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Método de contacto preferido</label>
+          <div class="contact-methods">
+            <label class="radio-option">
+              <input type="radio" name="contact-method" value="email" checked>
+              <span>📧 Email</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="contact-method" value="whatsapp">
+              <span>📱 WhatsApp</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="contact-method" value="phone">
+              <span>📞 Teléfono</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">
+            🚀 Enviar Mensaje
+          </button>
+          <button type="button" onclick="closeContactModal()" class="btn-secondary">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='assets/js/components/therapists.js') }}"></script>
+
+<script>
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+  loadTherapists();
+  initializeMap();
+});
+
+// Global variables
+let allTherapists = [];
+let filteredTherapists = [];
+let currentView = 'list';
+let map = null;
+let markers = [];
+
+// Load therapists data
+async function loadTherapists() {
+  try {
+    showLoadingState();
+    
+    const response = await fetch('/api/therapists');
+    const data = await response.json();
+    
+    allTherapists = data.therapists;
+    filteredTherapists = allTherapists;
+    
+    updateResultsCount();
+    renderCurrentView();
+    hideLoadingState();
+    
+  } catch (error) {
+    console.error('Error loading therapists:', error);
+    showErrorState();
+  }
+}
+
+// Apply filters
+async function applyFilters() {
+  const specialty = document.getElementById('specialty-filter').value;
+  const city = document.getElementById('city-filter').value;
+  const maxPrice = document.getElementById('price-filter').value;
+  const onlineOnly = document.getElementById('online-only').checked;
+  const availableOnly = document.getElementById('available-only').checked;
+  
+  // Build query params
+  const params = new URLSearchParams();
+  if (specialty) params.append('specialty', specialty);
+  if (city) params.append('city', city);
+  if (maxPrice) params.append('max_price', maxPrice);
+  if (onlineOnly) params.append('online_only', 'true');
+  if (availableOnly) params.append('available_only', 'true');
+  
+  try {
+    showLoadingState();
+    
+    const response = await fetch(`/api/therapists?${params}`);
+    const data = await response.json();
+    
+    filteredTherapists = data.therapists;
+    
+    updateResultsCount();
+    renderCurrentView();
+    hideLoadingState();
+    
+    // Track filter usage
+    if (window.uxEnhancements) {
+      window.uxEnhancements.trackEvent('therapist_filter_applied', {
+        specialty, city, max_price: maxPrice, online_only: onlineOnly
+      });
+    }
+    
+  } catch (error) {
+    console.error('Error filtering therapists:', error);
+    showErrorState();
+  }
+}
+
+// Switch between views
+function switchView(viewType) {
+  // Update buttons
+  document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+  document.getElementById(`${viewType}-view-btn`).classList.add('active');
+  
+  // Update views
+  document.querySelectorAll('.view-container').forEach(view => view.classList.remove('active'));
+  document.getElementById(`${viewType}-view`).classList.add('active');
+  
+  currentView = viewType;
+  
+  renderCurrentView();
+  
+  // Track view change
+  if (window.uxEnhancements) {
+    window.uxEnhancements.trackEvent('therapist_view_changed', { view: viewType });
+  }
+}
+
+// Render current view
+function renderCurrentView() {
+  if (filteredTherapists.length === 0) {
+    showEmptyState();
+    return;
+  }
+  
+  hideEmptyState();
+  
+  switch (currentView) {
+    case 'list':
+      renderListView();
+      break;
+    case 'map':
+      renderMapView();
+      break;
+    case 'grid':
+      renderGridView();
+      break;
+  }
+}
+
+// Render list view
+function renderListView() {
+  const container = document.getElementById('therapists-list');
+  container.innerHTML = '';
+  
+  filteredTherapists.forEach(therapist => {
+    const listItem = createTherapistListItem(therapist);
+    container.appendChild(listItem);
+  });
+}
+
+// Create therapist list item
+function createTherapistListItem(therapist) {
+  const item = document.createElement('div');
+  item.className = 'therapist-card';
+  
+  const specialtiesHTML = therapist.specialties.map(s => {
+    const specialtyMap = {
+      'humanista': '🌱 Humanista',
+      'cognitivo': '🧩 Cognitivo-Conductual',
+      'gestalt': '🌀 Gestalt',
+      'mindfulness': '🧘 Mindfulness',
+      'transpersonal': '✨ Transpersonal',
+      'sistemico': '🔄 Sistémica',
+      'freud': '🧠 Psicoanalítica', 
+      'jung': '🌌 Jungiana',
+      'dbt': '🔁 Dialéctico-Conductual',
+      'act': '🎯 Aceptación y Compromiso'
+    };
+    return `<span class="specialty-tag">${specialtyMap[s] || s}</span>`;
+  }).join('');
+  
+  const availabilityClass = therapist.availability === 'available' ? 'available' : 'busy';
+  const availabilityText = therapist.availability === 'available' ? 'Disponible' : 'Ocupado';
+  
+  item.innerHTML = `
+    <div class="therapist-header">
+      <div class="therapist-avatar">
+        <img src="${therapist.profile_image || '/static/images/default-avatar.png'}" 
+             alt="${therapist.name}" 
+             onerror="this.src='/static/images/default-avatar.png'">
+      </div>
+      <div class="therapist-info">
+        <h3 class="therapist-name">${therapist.name}</h3>
+        <p class="therapist-credentials">${therapist.credentials}</p>
+        <div class="therapist-rating">
+          <span class="rating-stars">⭐ ${therapist.rating}</span>
+          <span class="rating-count">(${therapist.reviews_count} reseñas)</span>
+        </div>
+      </div>
+      <div class="therapist-status">
+        <span class="availability-badge ${availabilityClass}">${availabilityText}</span>
+        <div class="therapist-price">${therapist.pricing.session_price.toLocaleString()}</div>
+      </div>
+    </div>
+    
+    <div class="therapist-body">
+      <div class="therapist-specialties">
+        ${specialtiesHTML}
+      </div>
+      
+      <p class="therapist-bio">${therapist.bio}</p>
+      
+      <div class="therapist-details">
+        <div class="detail-item">
+          <span class="detail-icon">📍</span>
+          <span>${therapist.location.zone || therapist.location.city}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-icon">💼</span>
+          <span>${therapist.experience_years} años de experiencia</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-icon">💻</span>
+          <span>${therapist.schedule.online ? 'Online disponible' : 'Solo presencial'}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="therapist-actions">
+      <button onclick="viewTherapistProfile('${therapist.id}')" class="btn-secondary">
+        👁️ Ver Perfil
+      </button>
+      <button onclick="openContactModal('${therapist.id}')" class="btn-primary">
+        💬 Contactar
+      </button>
+    </div>
+  `;
+  
+  return item;
+}
+
+// Initialize map
+function initializeMap() {
+  map = L.map('therapists-map').setView([-34.6037, -58.3816], 6); // Argentina center
+  
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+}
+
+// Render map view
+function renderMapView() {
+  if (!map) {
+    initializeMap();
+  }
+  
+  // Clear existing markers
+  markers.forEach(marker => map.removeLayer(marker));
+  markers = [];
+  
+  // Add markers for therapists
+  filteredTherapists.forEach(therapist => {
+    if (therapist.location.coordinates) {
+      const marker = L.marker([
+        therapist.location.coordinates.lat,
+        therapist.location.coordinates.lng
+      ]).addTo(map);
+      
+      const popupContent = `
+        <div class="map-popup">
+          <h4>${therapist.name}</h4>
+          <p>${therapist.credentials}</p>
+          <div class="popup-rating">⭐ ${therapist.rating} (${therapist.reviews_count})</div>
+          <div class="popup-price">${therapist.pricing.session_price.toLocaleString()}</div>
+          <button onclick="openContactModal('${therapist.id}')" class="popup-btn">
+            💬 Contactar
+          </button>
+        </div>
+      `;
+      
+      marker.bindPopup(popupContent);
+      markers.push(marker);
+    }
+  });
+  
+  // Update map sidebar
+  renderMapSidebar();
+  
+  // Fit map to markers
+  if (markers.length > 0) {
+    const group = new L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.1));
+  }
+}
+
+// Render map sidebar
+function renderMapSidebar() {
+  const container = document.getElementById('map-therapist-list');
+  container.innerHTML = '';
+  
+  filteredTherapists.forEach(therapist => {
+    const item = document.createElement('div');
+    item.className = 'map-therapist-item';
+    
+    item.innerHTML = `
+      <div class="map-item-header">
+        <h4>${therapist.name}</h4>
+        <span class="map-item-rating">⭐ ${therapist.rating}</span>
+      </div>
+      <p class="map-item-location">📍 ${therapist.location.zone || therapist.location.city}</p>
+      <p class="map-item-price">💰 ${therapist.pricing.session_price.toLocaleString()}</p>
+      <button onclick="openContactModal('${therapist.id}')" class="map-contact-btn">
+        Contactar
+      </button>
+    `;
+    
+    // Highlight on map when hovering
+    item.addEventListener('mouseenter', () => {
+      const marker = markers.find(m => 
+        m.getLatLng().lat === therapist.location.coordinates?.lat
+      );
+      if (marker) {
+        marker.openPopup();
+      }
+    });
+    
+    container.appendChild(item);
+  });
+}
+
+// Render grid view
+function renderGridView() {
+  const container = document.getElementById('therapists-grid');
+  container.innerHTML = '';
+  
+  filteredTherapists.forEach(therapist => {
+    const gridItem = createTherapistGridItem(therapist);
+    container.appendChild(gridItem);
+  });
+}
+
+// Create therapist grid item
+function createTherapistGridItem(therapist) {
+  const item = document.createElement('div');
+  item.className = 'therapist-grid-card';
+  
+  const mainSpecialty = therapist.specialties[0];
+  const specialtyEmojis = {
+    'humanista': '🌱',
+    'cognitivo': '🧩',
+    'gestalt': '🌀',
+    'mindfulness': '🧘',
+    'transpersonal': '✨',
+    'sistemico': '🔄',
+    'freud': '🧠',
+    'jung': '🌌',
+    'dbt': '🔁',
+    'act': '🎯'
+  };
+  
+  item.innerHTML = `
+    <div class="grid-card-header">
+      <div class="grid-specialty-icon">${specialtyEmojis[mainSpecialty] || '💙'}</div>
+      <div class="grid-availability ${therapist.availability}"></div>
+    </div>
+    
+    <div class="grid-avatar">
+      <img src="${therapist.profile_image || '/static/images/default-avatar.png'}" 
+           alt="${therapist.name}"
+           onerror="this.src='/static/images/default-avatar.png'">
+    </div>
+    
+    <h4 class="grid-name">${therapist.name}</h4>
+    <p class="grid-location">📍 ${therapist.location.city}</p>
+    
+    <div class="grid-rating">
+      <span>⭐ ${therapist.rating}</span>
+      <span class="grid-reviews">(${therapist.reviews_count})</span>
+    </div>
+    
+    <div class="grid-price">${therapist.pricing.session_price.toLocaleString()}</div>
+    
+    <div class="grid-actions">
+      <button onclick="viewTherapistProfile('${therapist.id}')" class="grid-btn-secondary">
+        Ver Perfil
+      </button>
+      <button onclick="openContactModal('${therapist.id}')" class="grid-btn-primary">
+        Contactar
+      </button>
+    </div>
+  `;
+  
+  return item;
+}
+
+// Open contact modal
+function openContactModal(therapistId) {
+  const therapist = allTherapists.find(t => t.id === therapistId);
+  if (!therapist) return;
+  
+  // Fill therapist info
+  document.getElementById('therapist-info').innerHTML = `
+    <div class="modal-therapist-summary">
+      <img src="${therapist.profile_image || '/static/images/default-avatar.png'}" 
+           alt="${therapist.name}" class="modal-avatar">
+      <div class="modal-therapist-details">
+        <h4>${therapist.name}</h4>
+        <p>${therapist.credentials}</p>
+        <div class="modal-rating">⭐ ${therapist.rating} (${therapist.reviews_count} reseñas)</div>
+      </div>
+    </div>
+  `;
+  
+  // Store current therapist
+  document.getElementById('contact-form').dataset.therapistId = therapistId;
+  
+  // Show modal
+  document.getElementById('contact-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  
+  // Track modal open
+  if (window.uxEnhancements) {
+    window.uxEnhancements.trackEvent('contact_modal_opened', {
+      therapist_id: therapistId,
+      therapist_name: therapist.name,
+      specialties: therapist.specialties
+    });
+  }
+}
+
+// Close contact modal
+function closeContactModal() {
+  document.getElementById('contact-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+  
+  // Reset form
+  document.getElementById('contact-form').reset();
+}
+
+// Send contact message
+async function sendContactMessage(event) {
+  event.preventDefault();
+  
+  const form = event.target;
+  const therapistId = form.dataset.therapistId;
+  
+  const formData = {
+    name: document.getElementById('contact-name').value,
+    email: document.getElementById('contact-email').value,
+    message: document.getElementById('contact-message').value,
+    method: document.querySelector('input[name="contact-method"]:checked').value
+  };
+  
+  try {
+    // Disable form
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+    
+    const response = await fetch(`/api/therapists/${therapistId}/contact`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
+    
+    const result = await response.json();
+    
+    if (result.message_sent) {
+      // Show success
+      showContactSuccess(result);
+      closeContactModal();
+    } else {
+      throw new Error('Error sending message');
+    }
+    
+  } catch (error) {
+    console.error('Error sending contact message:', error);
+    alert('Error enviando mensaje. Por favor intenta nuevamente.');
+  } finally {
+    // Re-enable form
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }
+}
+
+// Show contact success
+function showContactSuccess(result) {
+  const message = `
+    ✅ Mensaje enviado exitosamente a ${result.therapist_name}
+    
+    Tiempo estimado de respuesta: ${result.estimated_response_time}
+    
+    ${result.whatsapp_url ? 'También puedes contactar directamente por WhatsApp.' : ''}
+  `;
+  
+  if (window.notificationSystem) {
+    window.notificationSystem.showToast(message, 'success', 8000);
+  } else {
+    alert(message);
+  }
+  
+  // Open WhatsApp if that was the method
+  if (result.whatsapp_url) {
+    setTimeout(() => {
+      window.open(result.whatsapp_url, '_blank');
+    }, 2000);
+  }
+}
+
+// View therapist profile
+function viewTherapistProfile(therapistId) {
+  window.location.href = `/terapeuta/${therapistId}`;
+}
+
+// Clear all filters
+function clearFilters() {
+  document.getElementById('specialty-filter').value = '';
+  document.getElementById('city-filter').value = '';
+  document.getElementById('price-filter').value = '';
+  document.getElementById('online-only').checked = false;
+  document.getElementById('available-only').checked = true;
+  document.getElementById('accepts-insurance').checked = false;
+  
+  applyFilters();
+}
+
+// Update results count
+function updateResultsCount() {
+  const count = filteredTherapists.length;
+  const total = allTherapists.length;
+  
+  document.getElementById('results-count').textContent = 
+    `${count} de ${total} terapeutas`;
+}
+
+// Loading states
+function showLoadingState() {
+  document.getElementById('loading-state').classList.remove('hidden');
+  document.querySelectorAll('.view-container').forEach(view => 
+    view.classList.add('hidden'));
+}
+
+function hideLoadingState() {
+  document.getElementById('loading-state').classList.add('hidden');
+  document.getElementById(`${currentView}-view`).classList.remove('hidden');
+}
+
+function showEmptyState() {
+  document.getElementById('empty-state').classList.remove('hidden');
+  document.querySelectorAll('.view-container').forEach(view => 
+    view.classList.add('hidden'));
+}
+
+function hideEmptyState() {
+  document.getElementById('empty-state').classList.add('hidden');
+}
+
+function showErrorState() {
+  hideLoadingState();
+  if (window.notificationSystem) {
+    window.notificationSystem.showToast(
+      'Error cargando terapeutas. Por favor recarga la página.', 
+      'error'
+    );
+  }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+  const modal = document.getElementById('contact-modal');
+  if (event.target === modal) {
+    closeContactModal();
+  }
+});
+
+// ESC key to close modal
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    closeContactModal();
+  }
+});
+</script>
+{% endblock %}

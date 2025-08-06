@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ejercicios de Respiración - Tu Terapia AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ejercicios.css') }}">
+</head>
+<body>
+  <div class="exercise-container">
+    
+    <!-- Header -->
+   <div class="header-card">
+  <h1 class="text-3xl font-semibold mb-3" style="background: linear-gradient(135deg, var(--primary), var(--primary-soft)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+    🧘 Ejercicios de Respiración
+  </h1>
+  <p class="text-lg" style="color: var(--text-secondary);">
+    Encuentra tu centro y calma tu mente con técnicas de respiración guiada
+  </p>
+  <!-- NUEVO: Botón de regreso -->
+<div style="margin-top: 1.5rem;">
+  <button onclick="volverAlChat()" 
+          style="
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border-soft);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+          ">
+    <span>💬</span>
+    <span>Volver al chat terapéutico</span>
+  </button>
+ </div>
+</div>
+
+    <!-- Exercise Selector -->
+    <div class="exercise-selector" id="exerciseSelector">
+      
+      <div class="exercise-card" data-exercise="4-7-8" onclick="selectExercise('4-7-8')">
+        <div class="text-2xl mb-3">🌙</div>
+        <h3 class="text-lg font-semibold mb-2" style="color: var(--text-primary);">4-7-8 Relajante</h3>
+        <p class="text-sm" style="color: var(--text-secondary);">
+          Técnica perfecta para calmar la ansiedad y prepararte para dormir
+        </p>
+        <div class="text-xs mt-3" style="color: var(--text-muted);">
+          📅 5-10 minutos • 🎯 Ansiedad y sueño
+        </div>
+      </div>
+
+      <div class="exercise-card" data-exercise="box" onclick="selectExercise('box')">
+        <div class="text-2xl mb-3">📦</div>
+        <h3 class="text-lg font-semibold mb-2" style="color: var(--text-primary);">Respiración Cuadrada</h3>
+        <p class="text-sm" style="color: var(--text-secondary);">
+          Equilibra tu sistema nervioso y aumenta la concentración
+        </p>
+        <div class="text-xs mt-3" style="color: var(--text-muted);">
+          📅 5-15 minutos • 🎯 Concentración y equilibrio
+        </div>
+      </div>
+
+      <div class="exercise-card" data-exercise="coherent" onclick="selectExercise('coherent')">
+        <div class="text-2xl mb-3">💙</div>
+        <h3 class="text-lg font-semibold mb-2" style="color: var(--text-primary);">Respiración Coherente</h3>
+        <p class="text-sm" style="color: var(--text-secondary);">
+          Sincroniza corazón y mente para un bienestar profundo
+        </p>
+        <div class="text-xs mt-3" style="color: var(--text-muted);">
+          📅 10-20 minutos • 🎯 Bienestar general
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions" id="instructionsPanel">
+      <h3>💡 Cómo hacer este ejercicio:</h3>
+      <ul id="instructionsList">
+        <!-- Se llena dinámicamente -->
+      </ul>
+    </div>
+
+    <!-- Main Exercise Area -->
+    <div class="exercise-main" id="exerciseMain">
+      
+      <div id="setupScreen">
+        <div class="text-4xl mb-4">🧘‍♀️</div>
+        <h2 class="text-2xl font-semibold mb-4" style="color: var(--text-primary);">
+          Selecciona un ejercicio para comenzar
+        </h2>
+        <p style="color: var(--text-secondary);">
+          Cada técnica de respiración está diseñada para diferentes necesidades. 
+          Elige la que mejor se adapte a cómo te sientes ahora.
+        </p>
+      </div>
+
+      <div id="exerciseScreen" class="hidden">
+        <div class="phase-indicator" id="phaseIndicator">Preparándote...</div>
+        
+        <div class="breathing-circle rest" id="breathingCircle">
+          <div class="circle-content" id="circleContent">Respirar</div>
+        </div>
+        
+        <div class="timer-display" id="timerDisplay">0</div>
+        
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        
+        <div class="cycle-counter" id="cycleCounter">Ciclo 1 de 4</div>
+        
+    
+        <!-- Añadir esto en la sección de controles (después del botón "Terminar") -->
+<!-- Reemplazar la sección de controles con esta versión mejorada -->
+<div class="controls">
+  <button class="control-btn primary" id="startBtn" onclick="startExercise()">
+    ▶️ Comenzar
+  </button>
+  <button class="control-btn" id="pauseBtn" onclick="pauseExercise()" disabled>
+    ⏸️ Pausar
+  </button>
+  <button class="control-btn" id="stopBtn" onclick="stopExercise()" disabled>
+    ⏹️ Terminar
+  </button>
+  <button class="control-btn" id="audioBtn" onclick="toggleAudio()" title="Guía de voz">
+    🔊
+  </button>
+</div>
+
+<div id="audioSettings" class="hidden" style="margin-top: 1rem; padding: 1rem; background: rgba(79, 70, 229, 0.05); border-radius: 12px;">
+  <h4 style="margin-bottom: 1rem; color: var(--text-primary);">Configuración de voz</h4>
+  
+  <label style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem;">
+    <span style="min-width: 80px;">Velocidad:</span>
+    <input type="range" id="speechRate" min="0.5" max="1.5" step="0.1" value="0.8" onchange="updateSpeechSettings()">
+    <span id="rateValue" style="min-width: 30px;">0.8</span>
+  </label>
+  
+  <label style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem;">
+    <span style="min-width: 80px;">Tono:</span>
+    <input type="range" id="speechPitch" min="0.5" max="1.5" step="0.1" value="0.95" onchange="updateSpeechSettings()">
+    <span id="pitchValue" style="min-width: 30px;">0.95</span>
+  </label>
+  
+  <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-soft);">
+    <h4 style="margin-bottom: 0.75rem; color: var(--text-primary);">Sonido ambiental</h4>
+    <div style="display: flex; gap: 0.5rem; justify-content: center;">
+      <button class="control-btn" onclick="toggleAmbientSound('rain')" title="Lluvia suave">🌧️</button>
+      <button class="control-btn" onclick="toggleAmbientSound('ocean')" title="Olas del océano">🌊</button>
+      <button class="control-btn" onclick="toggleAmbientSound()" title="Silencio">🔇</button>
+    </div>
+  </div>
+  <!-- Pantalla de completación -->
+<div id="completionScreen" class="hidden">
+  <div class="completion-message">
+    <div class="completion-title">✨ ¡Excelente trabajo!</div>
+    <p class="completion-text">Has completado tu sesión de respiración.</p>
+    
+    <div class="stats-display" id="statsDisplay">
+      <!-- Se llena dinámicamente -->
+    </div>
+    
+    <!-- NUEVOS botones de navegación -->
+    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <button onclick="startNewSession()" 
+              class="control-btn primary">
+        🔄 Otra sesión
+      </button>
+      <button onclick="volverAlChatConExperiencia()" 
+              class="control-btn">
+        💬 Compartir en chat
+      </button>
+      <button onclick="registrarEnBitacora()" 
+              class="control-btn">
+        📖 Registrar experiencia
+      </button>
+    </div>
+  </div>
+
+</div>
+
+  </div>
+
+  
+    <script src="/static/assets/js/core/app.js"></script>
+    <script src="/static/assets/js/components/ejercicios.js"></script>
+
+
+</body>
+</html>

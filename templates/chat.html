@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tu Terapia AI – Chat</title>
+  <script src="https://js.puter.com/v2/" defer></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+</head>
+<body id="page" class="min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="p-6 flex justify-between items-center">
+    <div class="therapy-indicator">
+      <span id="therapyEmoji">🌱</span>
+      <span id="tituloTerapia">Espacio de Bienestar</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="session-timer" id="sessionTimer">00:00</div>
+      <button onclick="toggleModo()" class="control-button" title="Cambiar tema">
+        <span id="themeIcon">🌙</span>
+      </button>
+      <button onclick="irAEjercicios()" class="control-button" title="Ejercicios de respiración">🧘</button>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-1 px-6 flex flex-col justify-between max-w-4xl mx-auto w-full">
+
+    <!-- Chat Section -->
+    <section id="chatSection" class="section active flex flex-col gap-4 flex-1">
+      <div id="chat" class="flex flex-col gap-5 py-4 overflow-y-auto flex-1 scroll-smooth"></div>
+
+      <div id="typing" class="typing-indicator hidden">
+        <div class="avatar avatar-bot">✨</div>
+        <span class="text-sm font-medium" style="color: var(--text-secondary);">Reflexionando contigo</span>
+        <div class="typing-dots">
+          <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="mood-selector">
+          <button class="mood-btn active" onclick="setMood('😊', 'tranquilo')">😊 Tranquilo</button>
+          <button class="mood-btn" onclick="setMood('😔', 'melancólico')">😔 Melancólico</button>
+          <button class="mood-btn" onclick="setMood('😰', 'inquieto')">😰 Inquieto</button>
+          <button class="mood-btn" onclick="setMood('🤔', 'reflexivo')">🤔 Reflexivo</button>
+          <button class="mood-btn" onclick="setMood('💭', 'confuso')">💭 Confuso</button>
+        </div>
+        <div class="quick-responses" id="quickResponses">
+          <button class="quick-response" onclick="sendQuickResponse('Me gustaría explorar algo que siento')">Explorar sentimientos</button>
+          <button class="quick-response" onclick="sendQuickResponse('¿Podrías guiarme en una reflexión?')">Reflexión guiada</button>
+          <button class="quick-response" onclick="sendQuickResponse('Necesito claridad sobre algo')">Buscar claridad</button>
+        </div>
+        <div class="flex gap-3 items-end">
+          <textarea id="mensaje" class="message-input" rows="1" placeholder="Comparte lo que necesites expresar..." onInput="autoResize(this)"></textarea>
+          <button onclick="enviarMensaje()" class="send-button">Enviar</button>
+        </div>
+        <div class="flex justify-center gap-3 mt-4">
+          <button onclick="setModo('texto')" id="modoTxt" class="control-button active" title="Escribir">📝</button>
+          <button onclick="escucharMicrofono()" class="control-button" title="Hablar">🎙️</button>
+          <button onclick="reproducirUltima()" id="btnLeer" class="control-button hidden" title="Escuchar">🔊</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bitácora Section -->
+    <section id="bitacoraSection" class="section">
+      <div class="stats-card">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold" style="color: var(--text-primary);">📖 Tu Diario Emocional</h2>
+          <button onclick="exportBitacora()" class="text-sm bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-full transition-colors" style="color: var(--text-secondary);">📤 Exportar</button>
+        </div>
+        <div class="mb-6">
+          <p class="text-sm font-medium mb-4" style="color: var(--text-secondary);">¿Cómo resuena tu mundo interior hoy?</p>
+          <div class="emotion-wheel" onclick="selectEmotion(event)">
+            <div class="emotion-center" id="selectedEmotion">😊</div>
+          </div>
+        </div>
+        <textarea id="logInput" rows="4" class="message-input w-full mb-4" placeholder="Describe tu experiencia... qué has sentido, qué has aprendido, qué agradeces..."></textarea>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="text-sm font-medium" style="color: var(--text-secondary);">Intensidad:</span>
+          <input type="range" id="intensitySlider" min="1" max="10" value="5" class="slider flex-1" onchange="updateIntensity(this.value)">
+          <span class="text-sm font-mono" style="color: var(--text-primary);"><span id="intensityValue">5</span>/10</span>
+        </div>
+        <button onclick="guardarEntrada()" class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 rounded-2xl font-medium hover:from-green-600 hover:to-emerald-600 transition-all transform hover:translateY(-1px)">💎 Guardar Reflexión</button>
+      </div>
+      <div id="logList" class="space-y-4"></div>
+    </section>
+
+    <!-- Estado Section -->
+    <section id="estadoSection" class="section">
+      <div class="stats-card">
+        <h2 class="text-xl font-semibold mb-6" style="color: var(--text-primary);">🌸 Tu Crecimiento</h2>
+        <div class="grid grid-cols-2 gap-6 mb-8">
+          <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center"><span class="text-2xl">🌱</span></div>
+            <p class="text-sm mb-1" style="color: var(--text-secondary);">Bienestar general</p>
+            <p class="font-semibold text-lg" id="bienestarScore" style="color: var(--text-primary);">8.2/10</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center"><span class="text-2xl">🔥</span></div>
+            <p class="text-sm mb-1" style="color: var(--text-secondary);">Días consecutivos</p>
+            <p class="font-semibold text-lg" id="streakDays" style="color: var(--text-primary);">14 días</p>
+          </div>
+        </div>
+        <div class="text-sm space-y-2" style="color: var(--text-secondary);">
+          <div class="flex justify-between"><span>Sesiones completadas</span><span class="font-medium">32</span></div>
+          <div class="flex justify-between"><span>Tiempo de reflexión</span><span class="font-medium">6h 18min</span></div>
+          <div class="flex justify-between"><span>Última conexión</span><span class="font-medium">Hace 4 horas</span></div>
+        </div>
+        <div id="estado-actual" class="mt-6 text-sm text-gray-700 text-center">
+        <!-- El estado actual aparecerá aquí -->
+      </div>
+      </div>            
+    </section>
+
+    <!-- Ajustes Section -->
+    <section id="ajustesSection" class="section">
+      <div class="stats-card">
+        <h2 class="text-xl font-semibold mb-6" style="color: var(--text-primary);">⚙️ Preferencias</h2>
+        <div class="space-y-6">
+          <div class="flex justify-between items-center">
+            <div><span class="font-medium" style="color: var(--text-primary);">Recordatorios suaves</span><p class="text-sm" style="color: var(--text-secondary);">Notificaciones gentiles para cuidar tu bienestar</p></div>
+            <input type="checkbox" class="w-5 h-5" checked>
+          </div>
+          <div class="flex justify-between items-center">
+            <div><span class="font-medium" style="color: var(--text-primary);">Respuestas en voz</span><p class="text-sm" style="color: var(--text-secondary);">Escucha las reflexiones automáticamente</p></div>
+            <input type="checkbox" class="w-5 h-5">
+          </div>
+          <div><label class="block font-medium mb-2" style="color: var(--text-primary);">Duración ideal de sesión</label>
+            <select class="w-full p-3 rounded-xl border border-gray-200 bg-white" style="color: var(--text-primary);">
+              <option>15 minutos (conexión breve)</option>
+              <option selected>30 minutos (exploración profunda)</option>
+              <option>45 minutos (sesión extendida)</option>
+              <option>Sin límite (flujo natural)</option>
+            </select>
+          </div>
+          <div><label class="block font-medium mb-2" style="color: var(--text-primary);">Enfoque terapéutico</label>
+            <select class="w-full p-3 rounded-xl border border-gray-200 bg-white" style="color: var(--text-primary);" onchange="cambiarTerapia(this.value)">
+              <option value="humanista">🌱 Humanista - Crecimiento personal</option>
+              <option value="gestalt">🌀 Gestalt - Conciencia presente</option>
+              <option value="cognitivo">🧩 Cognitivo - Patrones de pensamiento</option>
+              <option value="mindfulness">🧘 Mindfulness - Atención plena</option>
+              <option value="transpersonal">✨ Transpersonal - Conexión profunda</option>
+            </select>
+          </div>
+          <button class="w-full bg-red-50 hover:bg-red-100 text-red-600 py-3 rounded-xl font-medium transition-colors" onclick="limpiarDatos()">🗑️ Limpiar datos guardados</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="navigation fixed bottom-6 left-6 right-6 mx-auto max-w-sm">
+    <button onclick="mostrar('chatSection')" class="nav-btn active" data-section="chatSection">💬</button>
+    <button onclick="mostrar('bitacoraSection');cargarBitacora();" class="nav-btn" data-section="bitacoraSection">📖</button>
+    <button onclick="mostrarEstadoSection()" class="nav-btn" data-section="estadoSection">🌸</button>
+    <button onclick="irADashboard()" class="nav-btn" title="Dashboard">📊</button>
+    <button onclick="irAEjercicios()" class="nav-btn" title="Ejercicios">🧘</button>
+    <a href="/" class="nav-btn">🏠</a>
+  </nav>
+
+  <div class="floating-help" onclick="showQuickHelp()">
+    <span style="color: var(--text-secondary);">💡</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/static/assets/js/core/app.js"></script>
+  <script src="/static/assets/js/components/chat.js"></script>
+
+</body>
+</html>

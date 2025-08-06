@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Términos de Uso - Tu Terapia AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-soft: #6366f1;
+      --primary-muted: #e0e7ff;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-elevated: rgba(255, 255, 255, 0.95);
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border-soft: rgba(148, 163, 184, 0.2);
+      --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-elevated: 0 8px 25px rgba(0, 0, 0, 0.1);
+      --accent-amber: #f59e0b;
+      --accent-amber-light: #fef3c7;
+      --accent-blue: #3b82f6;
+      --accent-blue-light: #dbeafe;
+    }
+    
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 40%, #f1f5f9 100%);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .main-card {
+      background: var(--surface-elevated);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-radius: 28px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-elevated);
+      padding: 3rem;
+      margin-bottom: 2rem;
+    }
+    
+    .header-section {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .header-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    
+    .main-title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--accent-blue-light), rgba(59, 130, 246, 0.1));
+      border: 1px solid var(--accent-blue);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+    
+    .welcome-title {
+      font-weight: 600;
+      color: var(--accent-blue);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+    }
+    
+    .welcome-text {
+      color: var(--accent-blue);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    
+    .section {
+      margin-bottom: 2.5rem;
+    }
+    
+    .section-title {
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .section-icon {
+      font-size: 1.5rem;
+    }
+    
+    .section-content {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    .important-notice {
+      background: var(--accent-amber-light);
+      border: 2px solid var(--accent-amber);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .important-title {
+      font-weight: 600;
+      color: var(--accent-amber);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+    }
+    
+    .important-content {
+      color: var(--accent-amber);
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    
+    .key-points {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .point-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+    }
+    
+    .point-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    
+    .point-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      font-size: 1.125rem;
+    }
+    
+    .point-description {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    .technical-section {
+      background: rgba(79, 70, 229, 0.05);
+      border: 1px solid var(--primary-muted);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .tech-title {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.25rem;
+    }
+    
+    .tech-content {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    
+    .contact-section {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(99, 102, 241, 0.05));
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      margin: 2rem 0;
+      border: 1px solid var(--primary-muted);
+    }
+    
+    .contact-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+    }
+    
+    .contact-text {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    
+    .emergency-info {
+      background: linear-gradient(135deg, #fee2e2, #fecaca);
+      border: 2px solid #ef4444;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+    
+    .emergency-title {
+      font-weight: 600;
+      color: #dc2626;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+    }
+    
+    .emergency-content {
+      color: #dc2626;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      color: var(--text-primary);
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s ease;
+      margin-top: 2rem;
+    }
+    
+    .back-button:hover {
+      background: var(--surface-elevated);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-elevated);
+      color: var(--primary);
+    }
+    
+    .update-date {
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-soft);
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+        margin: 1rem auto;
+      }
+      
+      .main-card {
+        padding: 2rem;
+        border-radius: 24px;
+      }
+      
+      .main-title {
+        font-size: 2rem;
+      }
+      
+      .key-points {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="main-card">
+      
+      <!-- Header -->
+      <div class="header-section">
+        <span class="header-icon">📋</span>
+        <h1 class="main-title">Términos de Uso</h1>
+        <p class="subtitle">
+          Bienvenido a Tu Terapia AI. Estos términos describen cómo usar nuestra herramienta 
+          de acompañamiento emocional de manera segura y responsable.
+        </p>
+      </div>
+
+      <!-- Welcome Banner -->
+      <div class="welcome-banner">
+        <div class="welcome-title">
+          <span>🌱</span>
+          <span>Gracias por elegir Tu Terapia AI</span>
+        </div>
+        <p class="welcome-text">
+          Una herramienta de apoyo emocional diseñada para complementar tu bienestar personal
+        </p>
+      </div>
+
+      <!-- Emergency Notice -->
+      <div class="emergency-info">
+        <div class="emergency-title">
+          <span>🚨</span>
+          <span>Importante: En Situaciones de Crisis</span>
+        </div>
+        <p class="emergency-content">
+          Si estás experimentando una crisis emocional o pensamientos de autolesión, 
+          contacta inmediatamente servicios de emergencia locales (911) o líneas de crisis especializadas. 
+          Esta aplicación NO está diseñada para situaciones de emergencia.
+        </p>
+      </div>
+
+      <!-- Key Points -->
+      <div class="key-points">
+        <div class="point-card">
+          <span class="point-icon">🎯</span>
+          <h3 class="point-title">Propósito y Alcance</h3>
+          <p class="point-description">
+            Tu Terapia AI es una herramienta de autoexploración y apoyo emocional. 
+            Complementa, pero no reemplaza, la atención profesional de salud mental.
+          </p>
+        </div>
+        
+        <div class="point-card">
+          <span class="point-icon">🤝</span>
+          <h3 class="point-title">Uso Responsable</h3>
+          <p class="point-description">
+            El uso de esta aplicación es completamente voluntario y bajo tu propia responsabilidad. 
+            Te animamos a usar tu criterio y buscar ayuda profesional cuando sea necesario.
+          </p>
+        </div>
+        
+        <div class="point-card">
+          <span class="point-icon">🤖</span>
+          <h3 class="point-title">Naturaleza de la IA</h3>
+          <p class="point-description">
+            Las respuestas son generadas por inteligencia artificial y no constituyen 
+            diagnósticos médicos, consejos clínicos o instrucciones profesionales.
+          </p>
+        </div>
+        
+        <div class="point-card">
+          <span class="point-icon">📝</span>
+          <h3 class="point-title">Actualizaciones</h3>
+          <p class="point-description">
+            Podemos actualizar estos términos ocasionalmente. Te notificaremos de cambios 
+            significativos y te sugerimos revisarlos periódicamente.
+          </p>
+        </div>
+      </div>
+
+      <!-- Detailed Sections -->
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">🌟</span>
+          Lo que puedes esperar de Tu Terapia AI
+        </h2>
+        <div class="section-content">
+          <p>Nuestra aplicación está diseñada para ofrecerte:</p>
+          <ul class="feature-list">
+            <li>
+              <span>✨</span>
+              <span>Un espacio seguro para la autoexploración emocional</span>
+            </li>
+            <li>
+              <span>🧘</span>
+              <span>Técnicas terapéuticas adaptadas a diferentes enfoques psicológicos</span>
+            </li>
+            <li>
+              <span>📖</span>
+              <span>Herramientas para el seguimiento de tu bienestar emocional</span>
+            </li>
+            <li>
+              <span>🔒</span>
+              <span>Total privacidad: tus datos permanecen en tu dispositivo</span>
+            </li>
+            <li>
+              <span>💙</span>
+              <span>Disponibilidad 24/7 para cuando necesites apoyo</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">⚖️</span>
+          Tus responsabilidades como usuario
+        </h2>
+        <div class="section-content">
+          <p>Para hacer el mejor uso de esta herramienta, te pedimos que:</p>
+          <ul class="feature-list">
+            <li>
+              <span>🎯</span>
+              <span>Uses la aplicación como apoyo complementario, no como sustituto de terapia profesional</span>
+            </li>
+            <li>
+              <span>🚨</span>
+              <span>Busques ayuda profesional inmediata en situaciones de crisis o emergencia</span>
+            </li>
+            <li>
+              <span>💭</span>
+              <span>Mantengas expectativas realistas sobre lo que la IA puede y no puede hacer</span>
+            </li>
+            <li>
+              <span>🤔</span>
+              <span>Uses tu criterio personal al considerar las sugerencias proporcionadas</span>
+            </li>
+            <li>
+              <span>📚</span>
+              <span>Consideres consultar con profesionales para obtener diagnósticos o tratamientos especializados</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Technical Section -->
+      <div class="technical-section">
+        <div class="tech-title">
+          <span>🔧</span>
+          <span>Funcionamiento Técnico y Privacidad</span>
+        </div>
+        <div class="tech-content">
+          <p><strong>Cómo funciona:</strong></p>
+          <p style="margin-bottom: 1rem;">
+            La aplicación utiliza el modelo GPT-4o de OpenAI con prompts especializados 
+            en diferentes enfoques terapéuticos, funcionando directamente en tu navegador 
+            sin necesidad de crear cuentas o proporcionar información personal.
+          </p>
+          
+          <p><strong>Tu privacidad está garantizada:</strong></p>
+          <ul class="feature-list">
+            <li>
+              <span>🛡️</span>
+              <span>No almacenamos información en servidores externos</span>
+            </li>
+            <li>
+              <span>💾</span>
+              <span>Todos los datos se guardan únicamente en tu navegador</span>
+            </li>
+            <li>
+              <span>🔐</span>
+              <span>Puedes exportar tu bitácora personal cuando desees</span>
+            </li>
+            <li>
+              <span>🚫</span>
+              <span>No rastreamos, analizamos ni monetizamos tus datos</span>
+            </li>
+            <li>
+              <span>🗑️</span>
+              <span>Puedes eliminar toda la información cuando quieras</span>
+            </li>
+          </ul>
+          
+          <div class="important-notice">
+            <div class="important-title">
+              <span>💡</span>
+              <span>Nota Importante</span>
+            </div>
+            <p class="important-content">
+              Si eliminas los datos de tu navegador o cambias de dispositivo, 
+              perderás tu historial de conversaciones y bitácora. Te recomendamos 
+              exportar tu información regularmente si deseas conservarla.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">
+          <span class="section-icon">🔮</span>
+          Futuras Actualizaciones
+        </h2>
+        <div class="section-content">
+          <p>
+            Estamos comprometidos con la mejora continua de Tu Terapia AI. 
+            En el futuro, podríamos incluir:
+          </p>
+          <ul class="feature-list">
+            <li>
+              <span>☁️</span>
+              <span>Opción de sincronización en la nube (con consentimiento explícito)</span>
+            </li>
+            <li>
+              <span>📊</span>
+              <span>Herramientas avanzadas de seguimiento del bienestar</span>
+            </li>
+            <li>
+              <span>🤝</span>
+              <span>Integración opcional con profesionales de salud mental</span>
+            </li>
+            <li>
+              <span>🌍</span>
+              <span>Recursos comunitarios y de apoyo local</span>
+            </li>
+          </ul>
+          <p style="margin-top: 1rem;">
+            Cualquier cambio significativo será comunicado con transparencia 
+            y requerirá tu consentimiento explícito.
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="contact-section">
+        <h3 class="contact-title">¿Preguntas sobre estos términos?</h3>
+        <p class="contact-text">
+          Si tienes dudas sobre el uso de la aplicación o estos términos, 
+          no dudes en contactarnos.
+        </p>
+        <p style="color: var(--primary); font-weight: 500;">
+          marianobiotico@gmail.com
+        </p>
+      </div>
+
+      <!-- Update Date -->
+      <div class="update-date">
+        <p><strong>Última actualización:</strong> Agosto 2025</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+          Nos comprometemos a mantener estos términos actualizados y transparentes
+        </p>
+      </div>
+
+      <!-- Back Button -->
+      <div style="text-align: center;">
+        <a href="/" class="back-button">
+          <span>←</span>
+          <span>Volver al inicio</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Animación de entrada suave
+    document.addEventListener('DOMContentLoaded', function() {
+      const card = document.querySelector('.main-card');
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        card.style.transition = 'all 0.6s ease-out';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 100);
+      
+      // Animación de las secciones al hacer scroll
+      const sections = document.querySelectorAll('.section, .key-points, .technical-section, .contact-section');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'all 0.6s ease-out';
+        observer.observe(section);
+      });
+    });
+  </script>
+
+</body>
+</html>

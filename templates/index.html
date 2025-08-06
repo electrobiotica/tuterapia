@@ -1,0 +1,543 @@
+{% extends "base.html" %}
+
+{% block title %}Tu Terapia AI - Bienestar Emocional con IA Especializada{% endblock %}
+{% block description %}Acompañamiento emocional 24/7 con IA especializada. 10 enfoques terapéuticos, completamente privado, gratuito. Comienza tu viaje de bienestar hoy.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section Optimizada -->
+<section class="hero-section">
+  <div class="hero-container animate-fade-in">
+    <!-- Trust Indicators -->
+    <div class="trust-indicators">
+      <div class="trust-badge">
+        <span>🔒</span>
+        <span>100% Privado</span>
+      </div>
+      <div class="trust-badge">
+        <span>🆓</span>
+        <span>Totalmente Gratuito</span>
+      </div>
+      <div class="trust-badge">
+        <span>🚀</span>
+        <span>Sin Registro</span>
+      </div>
+    </div>
+    
+    <h1 class="hero-title">
+      Tu Espacio Personal de <br>
+      <span class="gradient-text">Bienestar Emocional</span>
+    </h1>
+    
+    <p class="hero-subtitle">
+      Acompañamiento terapéutico inteligente disponible 24/7. 
+      <strong>10 enfoques especializados</strong> adaptados a tu estado emocional actual.
+    </p>
+    
+    <!-- CTA Principal -->
+    <div class="cta-section">
+      <a href="/chat" class="cta-primary" id="main-cta">
+        <span class="cta-icon">💬</span>
+        <span>Comenzar Conversación</span>
+        <span class="cta-arrow">→</span>
+      </a>
+      
+      <div class="cta-subtitle">
+        ✨ No necesitas cuenta • Privacidad total • Comienza en 10 segundos
+      </div>
+    </div>
+
+    <!-- Social Proof Rápido -->
+    <div class="social-proof">
+      <div class="proof-stats">
+        <div class="stat">
+          <span class="stat-number">2,547</span>
+          <span class="stat-label">Conversaciones esta semana</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">4.9★</span>
+          <span class="stat-label">Satisfacción promedio</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">Siempre disponible</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN PRINCIPAL: Herramientas de Bienestar -->
+<section class="tools-section">
+  <div class="section-header">
+    <h2 class="section-title">🛠️ Herramientas de Bienestar</h2>
+    <p class="section-subtitle">Acceso rápido a todas tus herramientas de crecimiento personal</p>
+  </div>
+  
+  <div class="tools-grid-compact">
+    <a href="/dashboard" class="tool-card-compact">
+      <span class="tool-emoji-compact">📊</span>
+      <div class="tool-content">
+        <h3 class="tool-title-compact">Mi Progreso</h3>
+        <p class="tool-description-compact">Dashboard completo de tu evolución</p>
+      </div>
+    </a>
+
+    <a href="/chat" class="tool-card-compact featured">
+      <span class="tool-emoji-compact">💬</span>
+      <div class="tool-content">
+        <h3 class="tool-title-compact">Chat Terapéutico</h3>
+        <p class="tool-description-compact">Conversación con IA especializada</p>
+      </div>
+      <div class="tool-badge">Popular</div>
+    </a>
+
+    <a href="/ejercicios" class="tool-card-compact">
+      <span class="tool-emoji-compact">🧘</span>
+      <div class="tool-content">
+        <h3 class="tool-title-compact">Ejercicios</h3>
+        <p class="tool-description-compact">Respiración y técnicas de calma</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- SECCIÓN: Enfoques Terapéuticos -->
+<section class="therapy-section">
+  <div class="section-header">
+    <h2 class="section-title">🌱 Enfoques Terapéuticos Especializados</h2>
+    <p class="section-subtitle">Elige el enfoque que mejor resuene contigo para tu chat personalizado</p>
+  </div>
+  
+  <!-- Enfoques Principales (Más Visibles) -->
+  <div class="featured-approaches">
+    <h3 class="featured-title">🌟 Más Populares</h3>
+    <div class="approaches-grid featured">
+      <a href="/chat?terapia=humanista" class="approach-card featured" data-approach="humanista">
+        <div class="approach-icon">🌱</div>
+        <h4 class="approach-name">Humanista</h4>
+        <p class="approach-description">Crecimiento personal, autoaceptación y potencial humano</p>
+        <div class="approach-benefits">
+          <span>• Autoexploración profunda</span>
+          <span>• Espacio sin juicio</span>
+          <span>• Empoderamiento personal</span>
+        </div>
+        <div class="approach-cta">
+          <span>Comenzar Chat Humanista →</span>
+        </div>
+      </a>
+
+      <a href="/chat?terapia=cognitivo" class="approach-card featured" data-approach="cognitivo">
+        <div class="approach-icon">🧩</div>
+        <h4 class="approach-name">Cognitivo-Conductual</h4>
+        <p class="approach-description">Transformar patrones de pensamiento y comportamiento</p>
+        <div class="approach-benefits">
+          <span>• Técnicas prácticas</span>
+          <span>• Cambio de perspectiva</span>
+          <span>• Herramientas concretas</span>
+        </div>
+        <div class="approach-cta">
+          <span>Comenzar Chat Cognitivo →</span>
+        </div>
+      </a>
+
+      <a href="/chat?terapia=mindfulness" class="approach-card featured" data-approach="mindfulness">
+        <div class="approach-icon">🧘</div>
+        <h4 class="approach-name">Mindfulness</h4>
+        <p class="approach-description">Atención plena y presencia consciente</p>
+        <div class="approach-benefits">
+          <span>• Reducción de ansiedad</span>
+          <span>• Calma mental</span>
+          <span>• Conciencia presente</span>
+        </div>
+        <div class="approach-cta">
+          <span>Comenzar Chat Mindfulness →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Todos los Enfoques -->
+  <div class="all-approaches">
+    <h3 class="approaches-subtitle">🎯 Todos los Enfoques Especializados</h3>
+    <div class="therapy-grid">
+      <a href="/chat?terapia=gestalt" class="therapy-card animate-fade-in animate-delay-1">
+        <span class="therapy-emoji">🌀</span>
+        <h2 class="therapy-title">Gestalt</h2>
+        <p class="therapy-description">Conciencia del presente y conexión mente-cuerpo.</p>
+      </a>
+
+      <a href="/chat?terapia=transpersonal" class="therapy-card animate-fade-in animate-delay-2">
+        <span class="therapy-emoji">✨</span>
+        <h2 class="therapy-title">Transpersonal</h2>
+        <p class="therapy-description">Exploración de la conciencia expandida.</p>
+      </a>
+
+      <a href="/chat?terapia=dbt" class="therapy-card animate-fade-in animate-delay-3">
+        <span class="therapy-emoji">🔁</span>
+        <h2 class="therapy-title">Dialéctico-Conductual</h2>
+        <p class="therapy-description">Regulación emocional y habilidades interpersonales.</p>
+      </a>
+
+      <a href="/chat?terapia=act" class="therapy-card animate-fade-in animate-delay-4">
+        <span class="therapy-emoji">🎯</span>
+        <h2 class="therapy-title">Aceptación y Compromiso</h2>
+        <p class="therapy-description">Vivir según tus valores más profundos.</p>
+      </a>
+
+      <a href="/chat?terapia=sistemico" class="therapy-card animate-fade-in animate-delay-5">
+        <span class="therapy-emoji">🔄</span>
+        <h2 class="therapy-title">Sistémica</h2>
+        <p class="therapy-description">Comprensión de relaciones y dinámicas familiares.</p>
+      </a>
+
+      <a href="/chat?terapia=freud" class="therapy-card animate-fade-in animate-delay-1">
+        <span class="therapy-emoji">🧠</span>
+        <h2 class="therapy-title">Psicoanalítica</h2>
+        <p class="therapy-description">Exploración del inconsciente y conflictos internos.</p>
+      </a>
+
+      <a href="/chat?terapia=jung" class="therapy-card animate-fade-in animate-delay-2">
+        <span class="therapy-emoji">🌌</span>
+        <h2 class="therapy-title">Jungiana</h2>
+        <p class="therapy-description">Arquetipos, símbolos y trabajo con sueños.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Therapy Approaches Preview -->
+<section class="therapy-preview-section">
+  <div class="section-header">
+    <h2 class="section-title">🌸 Enfoques Terapéuticos en Acción</h2>
+    <p class="section-subtitle">Cada uno diseñado para diferentes necesidades emocionales</p>
+  </div>
+
+  <div class="therapy-tabs">
+    <button class="therapy-tab active" onclick="showTherapyPreview('humanista')">
+      <span>🌱</span> Humanista
+    </button>
+    <button class="therapy-tab" onclick="showTherapyPreview('cognitivo')">
+      <span>🧩</span> Cognitivo-Conductual
+    </button>
+    <button class="therapy-tab" onclick="showTherapyPreview('mindfulness')">
+      <span>🧘</span> Mindfulness
+    </button>
+    <button class="therapy-tab" onclick="showTherapyPreview('transpersonal')">
+      <span>✨</span> Transpersonal
+    </button>
+  </div>
+
+  <div class="therapy-preview-content">
+    <div id="humanista" class="therapy-preview active">
+      <div class="preview-chat">
+        <div class="chat-message user">
+          "Me siento perdido en mi trabajo, como si no fuera suficiente..."
+        </div>
+        <div class="chat-message bot">
+          "Entiendo esa sensación de no sentirte suficiente. Es válido y humano experimentar esto. ¿Podrías contarme más sobre qué específicamente te hace sentir perdido? Tu experiencia es importante y merece ser escuchada sin juicio."
+        </div>
+      </div>
+      <div class="preview-description">
+        <h4>Enfoque Humanista</h4>
+        <p>Centrado en tu crecimiento personal, autoaceptación y potencial humano. Crea un espacio seguro para la autoexploración.</p>
+      </div>
+    </div>
+
+    <div id="cognitivo" class="therapy-preview">
+      <div class="preview-chat">
+        <div class="chat-message user">
+          "Siempre pienso que todo va a salir mal, no puedo evitarlo..."
+        </div>
+        <div class="chat-message bot">
+          "Noto que tienes pensamientos automáticos negativos. Esto es común y trabajable. ¿Podemos examinar juntos evidencias reales que apoyen o contradigan estos pensamientos? Te ayudo a identificar patrones y desarrollar perspectivas más equilibradas."
+        </div>
+      </div>
+      <div class="preview-description">
+        <h4>Enfoque Cognitivo-Conductual</h4>
+        <p>Identifica y transforma patrones de pensamiento negativos. Herramientas prácticas para cambiar la relación con tus pensamientos.</p>
+      </div>
+    </div>
+
+    <div id="mindfulness" class="therapy-preview">
+      <div class="preview-chat">
+        <div class="chat-message user">
+          "Mi mente no para, siempre está acelerada..."
+        </div>
+        <div class="chat-message bot">
+          "Esa sensación de mente acelerada es muy real. Te invito a hacer una pausa conmigo ahora mismo. Nota tu respiración, siente tus pies en el suelo. En este momento, aquí y ahora, estás seguro. ¿Qué observas cuando traes tu atención al presente?"
+        </div>
+      </div>
+      <div class="preview-description">
+        <h4>Enfoque Mindfulness</h4>
+        <p>Cultiva la atención plena y la presencia consciente. Aprende a observar pensamientos y emociones sin ser arrastrado por ellos.</p>
+      </div>
+    </div>
+
+    <div id="transpersonal" class="therapy-preview">
+      <div class="preview-chat">
+        <div class="chat-message user">
+          "Siento que hay algo más grande que yo, pero no sé qué es..."
+        </div>
+        <div class="chat-message bot">
+          "Esa intuición de algo más grande es profundamente sabia. El alma busca conexión y trascendencia. ¿Qué te susurra esa parte más profunda de ti? Exploremos juntos las dimensiones espirituales de tu experiencia humana."
+        </div>
+      </div>
+      <div class="preview-description">
+        <h4>Enfoque Transpersonal</h4>
+        <p>Explora dimensiones espirituales y de conciencia expandida. Conecta con propósito, significado y trascendencia personal.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-secondary">
+    <a href="/chat" class="btn-secondary">
+      <span>🚀 Probar Todos los Enfoques</span>
+    </a>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="section-header">
+    <h2 class="section-title">✨ ¿Por qué elegir Tu Terapia AI?</h2>
+    <p class="section-subtitle">La primera plataforma que combina privacidad total con especialización terapéutica</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card highlight">
+      <div class="feature-icon">🧠</div>
+      <h3 class="feature-title">10 Enfoques Terapéuticos</h3>
+      <p class="feature-description">
+        Desde Humanista hasta Transpersonal. Encuentra el enfoque que mejor resuene con tu momento actual.
+      </p>
+      <div class="feature-badge">Único en el mercado</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3 class="feature-title">Privacidad Absoluta</h3>
+      <p class="feature-description">
+        Tus conversaciones jamás salen de tu navegador. Sin servidores, sin cuentas, sin rastros.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3 class="feature-title">IA Especializada</h3>
+      <p class="feature-description">
+        GPT-4o entrenado específicamente en cada modalidad terapéutica con prompts de expertos.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3 class="feature-title">Disponible 24/7</h3>
+      <p class="feature-description">
+        Tu espacio de bienestar siempre accesible. Sin citas, sin esperas, sin horarios.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🌱</div>
+      <h3 class="feature-title">Herramientas Integradas</h3>
+      <p class="feature-description">
+        Ejercicios de respiración, diario emocional, dashboard de progreso y más.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🇦🇷</div>
+      <h3 class="feature-title">Contexto Cultural</h3>
+      <p class="feature-description">
+        Desarrollado en Argentina con comprensión de nuestro contexto cultural y social.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta-section">
+  <div class="final-cta-container">
+    <div class="cta-content">
+      <h2 class="cta-title">🌟 Tu viaje de bienestar comienza ahora</h2>
+      <p class="cta-description">
+        Únete a miles de personas que ya están transformando su relación con las emociones.
+        <strong>Sin registro, sin compromiso, sin riesgo.</strong>
+      </p>
+      
+      <div class="cta-buttons">
+        <a href="/chat" class="cta-primary large">
+          <span>💬 Comenzar Conversación</span>
+          <span class="cta-arrow">→</span>
+        </a>
+        
+        <a href="/ejercicios" class="cta-secondary">
+          <span>🧘 Probar Ejercicios</span>
+        </a>
+      </div>
+
+      <div class="final-guarantees">
+        <div class="guarantee">
+          <span>✅</span>
+          <span>Acceso inmediato</span>
+        </div>
+        <div class="guarantee">
+          <span>🔒</span>
+          <span>Privacidad garantizada</span>
+        </div>
+        <div class="guarantee">
+          <span>💙</span>
+          <span>Siempre gratuito</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer mejorado -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <h3>🌸 Tu Terapia AI</h3>
+        <p>Acompañamiento emocional inteligente para tu bienestar.</p>
+      </div>
+      
+      <div class="footer-links">
+        <div class="link-group">
+          <h4>Herramientas</h4>
+          <a href="/chat">Chat Terapéutico</a>
+          <a href="/ejercicios">Ejercicios</a>
+          <a href="/dashboard">Mi Progreso</a>
+        </div>
+        
+        <div class="link-group">
+          <h4>Información</h4>
+          <a href="/terminos">Términos de Uso</a>
+          <a href="/privacidad">Privacidad</a>
+          <a href="mailto:contacto@tuterapia-ai.com">Contacto</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p class="disclaimer">
+        💙 <strong>Importante:</strong> Esta aplicación complementa, no reemplaza, la atención profesional de salud mental. 
+        En situaciones de crisis, contacta servicios de emergencia o profesionales cualificados.
+      </p>
+      
+      <div class="creator-info">
+        <p>
+          Creado con dedicación por 
+          <a href="https://www.instagram.com/marianobiotico/" target="_blank">Mariano Biotico</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Therapy preview functionality
+function showTherapyPreview(therapy) {
+  // Update tabs
+  document.querySelectorAll('.therapy-tab').forEach(tab => tab.classList.remove('active'));
+  document.querySelector(`button[onclick*="${therapy}"]`).classList.add('active');
+  
+  // Update content
+  document.querySelectorAll('.therapy-preview').forEach(preview => preview.classList.remove('active'));
+  document.getElementById(therapy).classList.add('active');
+}
+
+// Enhanced tracking
+function trackCTAClick(ctaType, location) {
+  if (window.gtag) {
+    gtag('event', 'cta_click', {
+      cta_type: ctaType,
+      location: location
+    });
+  }
+  
+  if (window.uxEnhancements) {
+    window.uxEnhancements.trackEvent('landing_cta_click', {
+      type: ctaType,
+      location: location
+    });
+  }
+}
+
+// Intersection Observer for animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, observerOptions);
+
+// Initialize animations on load
+document.addEventListener('DOMContentLoaded', function() {
+  // Animate elements on scroll
+  const animatedElements = document.querySelectorAll('.feature-card, .therapy-card, .approach-card');
+  
+  animatedElements.forEach((el, index) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'all 0.6s ease-out';
+    el.style.transitionDelay = `${index * 0.1}s`;
+    observer.observe(el);
+  });
+  
+  // Track main CTA clicks
+  document.getElementById('main-cta').addEventListener('click', () => {
+    trackCTAClick('primary', 'hero');
+  });
+  
+  // Auto-cycle therapy previews
+  let currentTherapy = 0;
+  const therapies = ['humanista', 'cognitivo', 'mindfulness', 'transpersonal'];
+  
+  setInterval(() => {
+    currentTherapy = (currentTherapy + 1) % therapies.length;
+    showTherapyPreview(therapies[currentTherapy]);
+  }, 8000); // Change every 8 seconds
+  
+  // Mark app as used
+  localStorage.setItem('hasUsedApp', 'true');
+  
+  // Show welcome notification for first-time visitors
+  if (!localStorage.getItem('hasVisited')) {
+    setTimeout(() => {
+      if (window.notificationSystem) {
+        window.notificationSystem.showToast(
+          '👋 ¡Bienvenido! Explora nuestros 10 enfoques terapéuticos únicos', 
+          'info', 
+          7000
+        );
+      }
+    }, 3000);
+  }
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
+</script>
+{% endblock %}

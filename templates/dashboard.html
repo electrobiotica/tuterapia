@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Progreso - Tu Terapia AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+  <div class="dashboard-container">
+    
+    <!-- Header -->
+    <div class="dashboard-header animate-fade-in">
+      <h1 class="header-title">📊 Mi Progreso de Bienestar</h1>
+      <p class="header-subtitle" id="welcomeMessage">
+        Descubre tu camino hacia el equilibrio emocional
+      </p>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="quick-stats animate-fade-in">
+      <div class="stat-card">
+        <span class="stat-icon">🌱</span>
+        <span class="stat-value" id="bienestarScore">8.2</span>
+        <div class="stat-label">Bienestar General</div>
+        <div class="stat-trend trend-up" id="bienestarTrend">↗ +0.3 esta semana</div>
+      </div>
+      
+      <div class="stat-card">
+        <span class="stat-icon">🔥</span>
+        <span class="stat-value" id="streakDays">7</span>
+        <div class="stat-label">Días Consecutivos</div>
+        <div class="stat-trend trend-up" id="streakTrend">↗ Nueva racha!</div>
+      </div>
+      
+      <div class="stat-card">
+        <span class="stat-icon">💬</span>
+        <span class="stat-value" id="totalSessions">24</span>
+        <div class="stat-label">Sesiones Totales</div>
+        <div class="stat-trend trend-up" id="sessionsTrend">↗ +3 esta semana</div>
+      </div>
+      
+      <div class="stat-card">
+        <span class="stat-icon">⏱️</span>
+        <span class="stat-value" id="totalTime">8.5h</span>
+        <div class="stat-label">Tiempo Invertido</div>
+        <div class="stat-trend trend-up" id="timeTrend">↗ +2h esta semana</div>
+      </div>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <div class="dashboard-grid animate-fade-in">
+      
+      <!-- Progreso Semanal -->
+      <div class="dashboard-card">
+        <h3 class="card-title">
+          <span>📈</span>
+          Progreso Semanal
+        </h3>
+        <div class="chart-container">
+          <canvas id="progressChart"></canvas>
+        </div>
+        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+          Tu evolución en los últimos 7 días
+        </p>
+      </div>
+
+      <!-- Actividad Reciente -->
+      <div class="dashboard-card">
+        <h3 class="card-title">
+          <span>⚡</span>
+          Actividad Reciente
+        </h3>
+        <div class="activity-timeline" id="activityTimeline">
+          <!-- Se llena dinámicamente -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Segunda fila del grid -->
+    <div class="dashboard-grid animate-fade-in">
+      
+      <!-- Distribución de Actividades -->
+      <div class="dashboard-card">
+        <h3 class="card-title">
+          <span>🎯</span>
+          Distribución de Actividades
+        </h3>
+        <div class="chart-container">
+          <canvas id="activitiesChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Calendario Emocional -->
+      <div class="dashboard-card">
+        <h3 class="card-title">
+          <span>📅</span>
+          Tu Mes Emocional
+        </h3>
+        <div class="mood-calendar" id="moodCalendar">
+          <!-- Se llena dinámicamente -->
+        </div>
+        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+          Tus estados emocionales del mes
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Insights -->
+    <div class="dashboard-card animate-fade-in">
+      <h3 class="card-title">
+        <span>💡</span>
+        Insights Personalizados
+      </h3>
+      <div class="insights-grid" id="insightsContainer">
+        <!-- Se llena dinámicamente -->
+      </div>
+    </div>
+
+    <!-- Export Section -->
+    <div class="export-section animate-fade-in">
+      <h3 class="export-title">📤 Exportar Mi Progreso</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Descarga un reporte completo de tu viaje de bienestar
+      </p>
+      <div class="export-buttons">
+        <button onclick="exportarProgreso('pdf')" class="export-btn">
+          <span>📄</span>
+          <span>Reporte PDF</span>
+        </button>
+        <button onclick="exportarProgreso('json')" class="export-btn">
+          <span>💾</span>
+          <span>Datos JSON</span>
+        </button>
+        <button onclick="exportarProgreso('csv')" class="export-btn">
+          <span>📊</span>
+          <span>Estadísticas CSV</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation-bar animate-fade-in">
+      <a href="/chat" class="nav-btn">
+        <span>💬</span>
+        <span>Chat Terapéutico</span>
+      </a>
+      <a href="/ejercicios" class="nav-btn">
+        <span>🧘</span>
+        <span>Ejercicios</span>
+      </a>
+      <a href="/" class="nav-btn">
+        <span>🏠</span>
+        <span>Inicio</span>
+      </a>
+    </div>
+
+  </div>
+
+  
+    <script src="/static/assets/js/core/app.js"></script>
+    <script src="/static/assets/js/components/dashboard.js"></script>
+    
+</body>
+</html> 

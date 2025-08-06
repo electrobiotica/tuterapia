@@ -1,0 +1,367 @@
+:root {
+      --primary: #4f46e5;
+      --primary-soft: #6366f1;
+      --primary-muted: #e0e7ff;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-elevated: rgba(255, 255, 255, 0.95);
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border-soft: rgba(148, 163, 184, 0.2);
+      --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-elevated: 0 8px 25px rgba(0, 0, 0, 0.1);
+      --inhale-color: #a5b4fc;
+      --hold-color: #fbbf24;
+      --exhale-color: #34d399;
+      --rest-color: #e2e8f0;
+    }
+    
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 40%, #f1f5f9 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .exercise-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    .header-card {
+      background: var(--surface-elevated);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-radius: 28px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-elevated);
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .exercise-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .exercise-card {
+      background: var(--surface);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 20px;
+      border: 1px solid var(--border-soft);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-soft);
+    }
+    
+    .exercise-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-elevated);
+      border-color: var(--primary-muted);
+    }
+    
+    .exercise-card.active {
+      border-color: var(--primary);
+      background: var(--surface-elevated);
+      transform: translateY(-2px);
+    }
+    
+    .exercise-main {
+      background: var(--surface-elevated);
+      backdrop-filter: blur(24px) saturate(180%);
+      border-radius: 28px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-elevated);
+      padding: 3rem;
+      text-align: center;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .breathing-circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin: 2rem auto;
+      position: relative;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-elevated);
+    }
+    
+    .breathing-circle.inhale {
+      background: radial-gradient(circle, var(--inhale-color), rgba(165, 180, 252, 0.7));
+      transform: scale(1.3);
+    }
+    
+    .breathing-circle.hold {
+      background: radial-gradient(circle, var(--hold-color), rgba(251, 191, 36, 0.7));
+      transform: scale(1.3);
+    }
+    
+    .breathing-circle.exhale {
+      background: radial-gradient(circle, var(--exhale-color), rgba(52, 211, 153, 0.7));
+      transform: scale(0.8);
+    }
+    
+    .breathing-circle.rest {
+      background: radial-gradient(circle, var(--rest-color), rgba(226, 232, 240, 0.7));
+      transform: scale(1);
+    }
+    
+    .circle-content {
+      color: white;
+      font-weight: 600;
+      font-size: 1.25rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .phase-indicator {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      min-height: 2rem;
+    }
+    
+    .timer-display {
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--primary);
+      margin: 1rem 0;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .cycle-counter {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    
+    .control-btn {
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      border: 1px solid var(--border-soft);
+      background: var(--surface);
+      color: var(--text-primary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(12px);
+    }
+    
+    .control-btn:hover {
+      background: var(--surface-elevated);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
+    }
+    
+    .control-btn.primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    .control-btn.primary:hover {
+      background: var(--primary-soft);
+    }
+    
+    .control-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--rest-color);
+      border-radius: 3px;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+    
+    .instructions {
+      background: rgba(79, 70, 229, 0.05);
+      border: 1px solid var(--primary-muted);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+    
+    .instructions h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .instructions ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .instructions li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    
+    .completion-message {
+      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+      border: 2px solid #10b981;
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    
+    .completion-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #047857;
+      margin-bottom: 1rem;
+    }
+    
+    .completion-text {
+      color: #047857;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    .stats-display {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .stat-card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid var(--border-soft);
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+    
+    .hidden { display: none !important; }
+    
+    @media (max-width: 768px) {
+      .exercise-container {
+        padding: 0 1rem;
+        margin: 1rem auto;
+      }
+      
+      .exercise-main {
+        padding: 2rem;
+      }
+      
+      .breathing-circle {
+        width: 160px;
+        height: 160px;
+      }
+      
+      .timer-display {
+        font-size: 2.5rem;
+      }
+      
+      .controls {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .control-btn {
+        width: 200px;
+      }
+    }
+   
+   
+    .pulsing {
+      animation: pulse 2s infinite;
+    }
+
+    /* En la sección <style> de ejercicios.html */
+#audioBtn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+#audioSettings {
+  transition: all 0.3s ease;
+}
+
+#audioSettings label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+#audioSettings input[type="range"] {
+  flex: 1;
+  margin: 0 0.5rem;
+}
+
+/* Indicador visual cuando el audio está hablando */
+/* Reemplazar la animación existente con esta versión más suave */
+@keyframes gentlePulse {
+  0%, 100% { 
+    opacity: 0.4; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.3);
+  }
+}
+
+.speaking-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: 50%;
+  margin-left: 8px;
+  animation: gentlePulse 2s infinite;
+}

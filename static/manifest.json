@@ -1,0 +1,147 @@
+{
+  "name": "Tu Terapia AI - Bienestar Emocional",
+  "short_name": "Terapia AI",
+  "description": "Acompañamiento emocional personalizado con IA. 10 enfoques terapéuticos, completamente privado y gratuito.",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#f8fafc",
+  "theme_color": "#4f46e5",
+  "lang": "es",
+  "scope": "/",
+  "categories": ["health", "medical", "lifestyle", "productivity", "wellness"],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "handle_links": "preferred",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Comenzar Chat",
+      "short_name": "Chat",
+      "description": "Iniciar sesión de terapia",
+      "url": "/chat.html",
+      "icons": [
+  {
+    "src": "/favicon.ico",
+    "sizes": "48x48",
+    "type": "image/x-icon"
+  },
+  {
+    "src": "/apple-touch-icon.png",
+    "sizes": "180x180",
+    "type": "image/png"
+  }
+]
+
+    },
+    {
+      "name": "Ejercicios",
+      "short_name": "Ejercicios",
+      "description": "Técnicas de respiración",
+      "url": "/ejercicios.html",
+      "icons": [
+        {
+          "src": "/assets/icons/exercise-shortcut.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Mi Progreso",
+      "short_name": "Dashboard",
+      "description": "Ver mi progreso",
+      "url": "/dashboard.html",
+      "icons": [
+        {
+          "src": "/assets/icons/dashboard-shortcut.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "src": "/assets/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Vista del chat terapéutico en desktop"
+    },
+    {
+      "src": "/assets/images/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Vista móvil de Tu Terapia AI"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+terapia",
+      "url": "/chat.html?session=%s"
+    }
+  ]
+}

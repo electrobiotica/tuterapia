@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Error del servidor - Tu Terapia AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/errors.css') }}">
+  <style>
+    .error-message {
+      background: linear-gradient(135deg, #fee2e2, #fecaca);
+      border: 2px solid #ef4444;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .error-title {
+      font-weight: 600;
+      color: #dc2626;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+    }
+
+    .error-text {
+      color: #dc2626;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .comfort-section {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+      border: 1px solid #10b981;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .comfort-title {
+      font-weight: 600;
+      color: #047857;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+    }
+
+    .comfort-text {
+      color: #047857;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    .troubleshooting {
+      background: rgba(79, 70, 229, 0.05);
+      border: 1px solid var(--primary-muted);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .troubleshooting h3 {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+      text-align: center;
+    }
+
+    .troubleshooting ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .troubleshooting li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .step-number {
+      background: var(--primary);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .refresh-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .refresh-btn:hover {
+      background: var(--primary-soft);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .header-icon {
+      animation: shake 2s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .back-button, .refresh-btn {
+        width: 250px;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="main-card">
+      
+      <!-- Header Section -->
+      <div class="header-section">
+        <span class="header-icon">⚠️</span>
+        <h1 class="main-title">Algo inesperado ocurrió</h1>
+        <p class="subtitle">
+          Ha ocurrido un error interno en nuestros servidores. Sabemos lo frustrante que puede ser, 
+          pero estamos trabajando para solucionarlo.
+        </p>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-message">
+        <div class="error-title">
+          <span>🔧</span>
+          <span>Error técnico temporal</span>
+        </div>
+        <p class="error-text">
+          Nuestro equipo técnico ha sido notificado automáticamente. 
+          Por favor, intenta nuevamente en unos minutos.
+        </p>
+      </div>
+
+      <!-- Comfort Section -->
+      <div class="comfort-section">
+        <div class="comfort-title">
+          <span>💚</span>
+          <span>Tu bienestar es lo más importante</span>
+        </div>
+        <p class="comfort-text">
+          Aunque tengamos problemas técnicos temporales, tu proceso de crecimiento personal 
+          no se detiene. Todos tus datos están seguros y tu progreso se mantiene intacto.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button onclick="window.location.reload()" class="refresh-btn">
+          <span>🔄</span>
+          <span>Intentar nuevamente</span>
+        </button>
+        <a href="/" class="back-button">
+          <span>🏠</span>
+          <span>Volver al inicio</span>
+        </a>
+      </div>
+
+      <!-- Troubleshooting -->
+      <div class="troubleshooting">
+        <h3>🛠️ Mientras tanto, puedes intentar</h3>
+        <ul>
+          <li>
+            <span class="step-number">1</span>
+            <span>Recargar la página después de unos segundos</span>
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            <span>Verificar tu conexión a internet</span>
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            <span>Limpiar la caché de tu navegador</span>
+          </li>
+          <li>
+            <span class="step-number">4</span>
+            <span>Volver a la página principal y navegar desde allí</span>
+          </li>
+          <li>
+            <span class="step-number">5</span>
+            <span>Si persiste el problema, inténtalo más tarde</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Alternative Access -->
+      <div class="helpful-links" style="background: rgba(79, 70, 229, 0.05); border: 1px solid var(--primary-muted); border-radius: 20px; padding: 1.5rem; margin: 2rem 0;">
+        <h3 style="color: var(--primary); font-weight: 600; margin-bottom: 1rem; font-size: 1.125rem; text-align: center;">
+          🌟 Acceso alternativo a tus herramientas
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+          <a href="/chat" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(255, 255, 255, 0.7); border-radius: 12px; transition: all 0.3s ease; text-decoration: none; color: var(--text-secondary);">
+            <span style="font-size: 1.5rem;">💬</span>
+            <span style="font-size: 0.9rem; font-weight: 500;">Chat Terapéutico</span>
+          </a>
+          <a href="/ejercicios" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(255, 255, 255, 0.7); border-radius: 12px; transition: all 0.3s ease; text-decoration: none; color: var(--text-secondary);">
+            <span style="font-size: 1.5rem;">🧘</span>
+            <span style="font-size: 0.9rem; font-weight: 500;">Ejercicios</span>
+          </a>
+          <a href="/dashboard" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(255, 255, 255, 0.7); border-radius: 12px; transition: all 0.3s ease; text-decoration: none; color: var(--text-secondary);">
+            <span style="font-size: 1.5rem;">📊</span>
+            <span style="font-size: 0.9rem; font-weight: 500;">Mi Progreso</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Support Note -->
+      <div class="footer-note">
+        <p>
+          <strong>¿Necesitas ayuda adicional?</strong><br>
+          Si el problema persiste, puedes contactarnos en 
+          <a href="mailto:marianobiotico@gmail.com" style="color: var(--primary); text-decoration: underline;">
+            marianobiotico@gmail.com
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Core JavaScript -->
+  <script src="{{ url_for('static', filename='assets/js/core/app.js') }}"></script>
+  <script>
+    // Animación de entrada suave
+    document.addEventListener('DOMContentLoaded', function() {
+      const card = document.querySelector('.main-card');
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        card.style.transition = 'all 0.6s ease-out';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 100);
+
+      // Track error para analytics y debugging
+      if (window.app && window.app.track) {
+        window.app.track('server_error_500', {
+          timestamp: Date.now(),
+          user_agent: navigator.userAgent,
+          url: window.location.href,
+          referrer: document.referrer
+        });
+      }
+
+      // Auto-retry después de 30 segundos (opcional)
+      setTimeout(() => {
+        const retryBanner = document.createElement('div');
+        retryBanner.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+          border: 2px solid #10b981;
+          border-radius: 12px;
+          padding: 1rem;
+          color: #047857;
+          font-weight: 600;
+          z-index: 1000;
+          animation: slideIn 0.5s ease-out;
+          max-width: 300px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        `;
+        
+        retryBanner.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <span>🔄</span>
+            <span>Reintento automático disponible</span>
+          </div>
+          <button onclick="window.location.reload()" 
+                  style="background: #047857; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer;">
+            Reintentar ahora
+          </button>
+          <button onclick="this.parentElement.remove()" 
+                  style="background: transparent; color: #047857; border: 1px solid #047857; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer; margin-left: 0.5rem;">
+            Cerrar
+          </button>
+        `;
+        
+        document.body.appendChild(retryBanner);
+        
+        // Auto-remove después de 10 segundos
+        setTimeout(() => {
+          if (retryBanner.parentElement) {
+            retryBanner.remove();
+          }
+        }, 10000);
+      }, 30000);
+    });
+
+    // Función para reportar error (opcional)
+    function reportError() {
+      if (window.app && window.app.track) {
+        window.app.track('error_report_requested', {
+          error_type: '500',
+          user_action: 'manual_report'
+        });
+      }
+      alert('Gracias por reportar el error. Nuestro equipo técnico ha sido notificado.');
+    }
+  </script>
+</body>
+</html>

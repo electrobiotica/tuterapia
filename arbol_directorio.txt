@@ -1,0 +1,59 @@
+Listado de rutas de carpetas para el volumen TODO
+El n£mero de serie del volumen es 8017-22E1
+F:.
+³   app.py
+³   arboldedirectorio.bat
+³   arbol_directorio.txt
+³   env
+³   requirements.txt
+³   vercel.json
+³   
+ÃÄÄÄ.vercel
+³       project.json
+³       README.txt
+³       
+ÃÄÄÄapi
+³       health.py
+³       index.py
+³       
+ÃÄÄÄstatic
+³   ³   manifest.json
+³   ³   sw.js
+³   ³   
+³   ÃÄÄÄassets
+³   ³   ÃÄÄÄicons
+³   ³   ³       apple-touch-icon.png
+³   ³   ³       favicon.ico
+³   ³   ³       screenshot-desktop.jpg
+³   ³   ³       
+³   ³   ÀÄÄÄjs
+³   ³       ÃÄÄÄcomponents
+³   ³       ³       chat.js
+³   ³       ³       dashboard.js
+³   ³       ³       ejercicios.js
+³   ³       ³       ux-improvements.js
+³   ³       ³       
+³   ³       ÀÄÄÄcore
+³   ³               app.js
+³   ³               
+³   ÀÄÄÄcss
+³           chat.css
+³           dashboard.css
+³           ejercicios.css
+³           errors.css
+³           landing.css
+³           main original.css
+³           main.css
+³           
+ÀÄÄÄtemplates
+        404.html
+        500.html
+        base.html
+        chat.html
+        dashboard.html
+        ejercicios.html
+        index.html
+        privacidad.html
+        terminos.html
+        therapists.html
+        

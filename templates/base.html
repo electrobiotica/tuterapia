@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% block description %}Tu Terapia AI - Bienestar emocional personalizado con IA. 10 enfoques terapéuticos, completamente privado y gratuito.{% endblock %}">
+  <meta name="keywords" content="terapia AI, salud mental, bienestar emocional, psicología online, mindfulness, Argentina">
+  <meta name="author" content="Tu Terapia AI">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.url }}">
+  <meta property="og:title" content="{% block og_title %}Tu Terapia AI - Bienestar Emocional{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Acompañamiento emocional con IA especializada. 10 enfoques terapéuticos, privacidad total, disponible 24/7.{% endblock %}">
+  <meta property="og:image" content="{{ url_for('static', filename='assets/images/og-image.jpg') }}">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ request.url }}">
+  <meta property="twitter:title" content="{% block twitter_title %}Tu Terapia AI{% endblock %}">
+  <meta property="twitter:description" content="{% block twitter_description %}Bienestar emocional con IA{% endblock %}">
+  <meta property="twitter:image" content="{{ url_for('static', filename='assets/images/twitter-card.jpg') }}">
+
+  <title>{% block title %}Tu Terapia AI - Bienestar Emocional{% endblock %}</title>
+
+  <!-- Preload críticos -->
+  <link rel="preload" href="{{ url_for('static', filename='css/main.css') }}" as="style">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+  
+  <!-- CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  {% block extra_css %}{% endblock %}
+
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Tu Terapia AI">
+  
+  <!-- Icons -->
+  <link rel="icon" href="{{ url_for('static', filename='assets/icons/favicon.ico') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='assets/icons/apple-touch-icon.png') }}">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Tu Terapia AI",
+    "description": "Plataforma de bienestar emocional con inteligencia artificial",
+    "url": "{{ request.url_root }}",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Tu Terapia AI"
+    }
+  }
+  </script>
+
+  <!-- Analytics -->
+  {% if config.GOOGLE_ANALYTICS_ID %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.GOOGLE_ANALYTICS_ID }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ config.GOOGLE_ANALYTICS_ID }}', {
+      page_title: '{{ self.title() }}',
+      page_location: window.location.href
+    });
+  </script>
+  {% endif %}
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  
+  <!-- Skip to content for accessibility -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-50">
+    Saltar al contenido principal
+  </a>
+
+  <!-- Header opcional -->
+  {% block header %}{% endblock %}
+
+  <!-- Main Content -->
+  <main id="main-content" role="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer opcional -->
+  {% block footer %}{% endblock %}
+
+  <!-- Notification System -->
+  <div id="notification-container" class="fixed top-4 right-4 z-50 space-y-2 max-w-sm"></div>
+
+  <!-- Core JavaScript -->
+  <script src="{{ url_for('static', filename='assets/js/core/app.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/components/ux-improvements.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('{{ url_for("static", filename="sw.js") }}')
+          .then(function(registration) {
+            console.log('✅ Service Worker registrado:', registration.scope);
+          })
+          .catch(function(error) {
+            console.log('❌ Service Worker falló:', error);
+          });
+      });
+    }
+  </script>
+
+  <!-- Global Notification System -->
+  <script>
+    class NotificationSystem {
+      constructor() {
+        this.container = document.getElementById('notification-container');
+        this.init();
+      }
+
+      init() {
+        // Request notification permission
+        if ('Notification' in window && Notification.permission === 'default') {
+          setTimeout(() => this.requestPermission(), 10000); // After 10 seconds
+        }
+      }
+
+      async requestPermission() {
+        if ('Notification' in window) {
+          const permission = await Notification.requestPermission();
+          if (permission === 'granted') {
+            this.showToast('🔔 Notificaciones activadas para recordatorios de bienestar', 'success');
+          }
+        }
+      }
+
+      showToast(message, type = 'info', duration = 5000) {
+        const toast = document.createElement('div');
+        toast.className = `notification-toast notification-${type}`;
+        
+        const icons = {
+          'success': '✅',
+          'error': '❌', 
+          'warning': '⚠️',
+          'info': 'ℹ️'
+        };
+
+        toast.innerHTML = `
+          <div class="flex items-start gap-3 p-4 rounded-2xl shadow-lg backdrop-blur-lg">
+            <span class="text-xl flex-shrink-0">${icons[type]}</span>
+            <div class="flex-1">
+              <p class="text-sm font-medium">${message}</p>
+            </div>
+            <button onclick="this.closest('.notification-toast').remove()" 
+                    class="text-gray-400 hover:text-gray-600 flex-shrink-0">
+              ×
+            </button>
+          </div>
+        `;
+
+        // Styling based on type
+        const styles = {
+          'success': 'bg-green-100 border-green-200 text-green-800',
+          'error': 'bg-red-100 border-red-200 text-red-800',
+          'warning': 'bg-yellow-100 border-yellow-200 text-yellow-800',
+          'info': 'bg-blue-100 border-blue-200 text-blue-800'
+        };
+
+        toast.querySelector('.flex').className += ` ${styles[type]} border`;
+        toast.style.animation = 'slideInRight 0.3s ease-out';
+
+        this.container.appendChild(toast);
+
+        // Auto remove
+        setTimeout(() => {
+          toast.style.animation = 'slideOutRight 0.3s ease-in';
+          setTimeout(() => toast.remove(), 300);
+        }, duration);
+      }
+
+      showNotification(title, options = {}) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+          const notification = new Notification(title, {
+            icon: '{{ url_for("static", filename="assets/icons/icon-192x192.png") }}',
+            badge: '{{ url_for("static", filename="assets/icons/icon-72x72.png") }}',
+            ...options
+          });
+
+          notification.onclick = function() {
+            window.focus();
+            this.close();
+          };
+
+          return notification;
+        }
+      }
+
+      scheduleWellnessReminder() {
+        // Schedule gentle reminders
+        const reminders = [
+          { time: '12:00', message: '🌸 Un momento para ti. ¿Cómo te sientes?' },
+          { time: '18:00', message: '💙 Tiempo de reflexión. Tu bienestar importa.' },
+          { time: '21:00', message: '🌙 Respiración consciente antes de descansar.' }
+        ];
+
+        reminders.forEach(reminder => {
+          this.scheduleDaily(reminder.time, () => {
+            this.showNotification('Tu Terapia AI', {
+              body: reminder.message,
+              tag: 'wellness-reminder'
+            });
+          });
+        });
+      }
+
+      scheduleDaily(time, callback) {
+        const [hours, minutes] = time.split(':').map(Number);
+        const now = new Date();
+        const scheduledTime = new Date();
+        scheduledTime.setHours(hours, minutes, 0, 0);
+
+        if (scheduledTime <= now) {
+          scheduledTime.setDate(scheduledTime.getDate() + 1);
+        }
+
+        const timeUntil = scheduledTime - now;
+        setTimeout(() => {
+          callback();
+          setInterval(callback, 24 * 60 * 60 * 1000); // Repeat daily
+        }, timeUntil);
+      }
+    }
+
+    // Initialize notification system
+    document.addEventListener('DOMContentLoaded', () => {
+      window.notificationSystem = new NotificationSystem();
+      
+      // Schedule wellness reminders if user has used the app
+      if (localStorage.getItem('hasUsedApp')) {
+        window.notificationSystem.scheduleWellnessReminder();
+      }
+    });
+
+    // CSS for notifications
+    const notificationStyles = document.createElement('style');
+    notificationStyles.textContent = `
+      @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      
+      @keyframes slideOutRight {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+
+      .notification-toast {
+        margin-bottom: 0.5rem;
+        max-width: 300px;
+      }
+
+      @media (max-width: 640px) {
+        #notification-container {
+          left: 1rem;
+          right: 1rem;
+          top: 1rem;
+        }
+        
+        .notification-toast {
+          max-width: none;
+        }
+      }
+    `;
+    document.head.appendChild(notificationStyles);
+  </script>
+
+  <!-- Performance Monitoring -->
+  <script>
+    // Core Web Vitals monitoring
+    function measureWebVitals() {
+      if ('web-vitals' in window) {
+        import('https://unpkg.com/web-vitals@3/dist/web-vitals.js').then(({ onCLS, onFID, onFCP, onLCP, onTTFB }) => {
+          onCLS(console.log);
+          onFID(console.log);
+          onFCP(console.log);
+          onLCP(console.log);
+          onTTFB(console.log);
+        });
+      }
+    }
+
+    // Error tracking
+    window.addEventListener('error', (event) => {
+      console.error('Error capturado:', event.error);
+      
+      // Send to analytics if available
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'exception', {
+          description: event.error.message,
+          fatal: false
+        });
+      }
+    });
+
+    // Page load analytics
+    window.addEventListener('load', () => {
+      measureWebVitals();
+      
+      // Track page load time
+      const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'timing_complete', {
+          name: 'load',
+          value: loadTime
+        });
+      }
+    });
+  </script>
+
+  {% block footer_js %}{% endblock %}
+</body>
+</html>

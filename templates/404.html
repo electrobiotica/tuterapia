@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página no encontrada - Tu Terapia AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/errors.css') }}">
+  <style>
+    .comfort-message {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+      border: 1px solid #3b82f6;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .comfort-title {
+      font-weight: 600;
+      color: #3b82f6;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+    }
+
+    .comfort-text {
+      color: #3b82f6;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    .helpful-links {
+      background: rgba(79, 70, 229, 0.05);
+      border: 1px solid var(--primary-muted);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .helpful-links h3 {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+      text-align: center;
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text-secondary);
+    }
+
+    .link-item:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-1px);
+      color: var(--primary);
+    }
+
+    .link-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .link-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .header-icon {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .back-button {
+        width: 250px;
+        justify-content: center;
+      }
+      
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="main-card">
+      
+      <!-- Header Section -->
+      <div class="header-section">
+        <span class="header-icon">🧭</span>
+        <h1 class="main-title">Parece que nos perdimos</h1>
+        <p class="subtitle">
+          La página que estás buscando no existe o ha sido movida. Pero no te preocupes, 
+          estamos aquí para guiarte de vuelta a tu espacio de bienestar.
+        </p>
+      </div>
+
+      <!-- Comfort Message -->
+      <div class="comfort-message">
+        <div class="comfort-title">
+          <span>💙</span>
+          <span>Tu bienestar sigue siendo nuestra prioridad</span>
+        </div>
+        <p class="comfort-text">
+          A veces perderse puede ser parte del camino. Vamos a encontrar juntos 
+          el lugar correcto para continuar tu proceso de crecimiento personal.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <a href="/" class="back-button" style="background: var(--primary); color: white; border-color: var(--primary);">
+          <span>🏠</span>
+          <span>Volver al inicio</span>
+        </a>
+        <a href="/chat" class="back-button">
+          <span>💬</span>
+          <span>Ir al chat</span>
+        </a>
+      </div>
+
+      <!-- Helpful Links -->
+      <div class="helpful-links">
+        <h3>🌟 Herramientas disponibles para ti</h3>
+        <div class="links-grid">
+          <a href="/chat" class="link-item">
+            <span class="link-icon">💬</span>
+            <span class="link-text">Chat Terapéutico</span>
+          </a>
+          <a href="/ejercicios" class="link-item">
+            <span class="link-icon">🧘</span>
+            <span class="link-text">Ejercicios de Respiración</span>
+          </a>
+          <a href="/dashboard" class="link-item">
+            <span class="link-icon">📊</span>
+            <span class="link-text">Mi Progreso</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="footer-note">
+        <p>
+          Si llegaste aquí por un enlace roto, no dudes en usar cualquiera de nuestras herramientas. 
+          Tu viaje de bienestar puede continuar desde cualquier punto.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Core JavaScript -->
+  <script src="{{ url_for('static', filename='assets/js/core/app.js') }}"></script>
+  <script>
+    // Animación de entrada suave
+    document.addEventListener('DOMContentLoaded', function() {
+      const card = document.querySelector('.main-card');
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        card.style.transition = 'all 0.6s ease-out';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 100);
+
+      // Track error para analytics
+      if (window.app && window.app.track) {
+        window.app.track('page_404_viewed', {
+          requested_url: window.location.pathname,
+          referrer: document.referrer
+        });
+      }
+    });
+
+    // Función para volver atrás si hay historial
+    function goBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = '/';
+      }
+    }
+  </script>
+</body>
+</html>
